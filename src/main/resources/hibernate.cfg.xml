@@ -42,6 +42,7 @@ Contributor(s):
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+<<<<<<< HEAD
     <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/microdelivery?serverTimezone=UTC</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
@@ -51,5 +52,18 @@ Contributor(s):
     <!-- List of mapping classes -->
     <mapping class="com.nyp.microdelivery.posting.Post"></mapping>
     <mapping class="com.nyp.microdelivery.enterprise.Entity.Item"></mapping>
+=======
+    <property name="connection.datasource">jdbc/microDelivery</property>
+
+    <!--<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+
+
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/micoDelivery</property>
+    <property name="hibernate.connection.username">user</property>
+    <property name="hibernate.connection.password">1234567</property>-->
+    <!-- List of XML mapping files -->
+    <!-- mapping resource="com/nyp/testing/Posting.hbm.xml"/-->
+    <mapping class="enterprise.Entity.Item"/>
+>>>>>>> pr/2
   </session-factory>
 </hibernate-configuration>
