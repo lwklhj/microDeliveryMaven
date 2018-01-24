@@ -18,16 +18,14 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
  */
 public class HibernateUtil {
 
-    private static final SessionFactory sessionFactory;
+    private static final SessionFactory sessionFactory = buildSessionFactory();
     
-    static {
+    private static SessionFactory buildSessionFactory() {
         try {
-            Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
-            sessionFactory = configuration.buildSessionFactory(new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build());
+            return new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
-            // Log the exception. 
             System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
+            throw new ExceptionInInitializerError();
         }
     }
     

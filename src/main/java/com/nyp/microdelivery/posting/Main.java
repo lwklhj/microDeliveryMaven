@@ -5,13 +5,7 @@
  */
 package com.nyp.microdelivery.posting;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.primefaces.component.fileupload.FileUpload;
+import enterprise.Entity.Company;
 
 /**
  *
@@ -19,5 +13,7 @@ import org.primefaces.component.fileupload.FileUpload;
  */
 public class Main {
     public static void main(String[] args) {
+        Company c=new Company();
+        System.out.print(c.getCompanyDetail().toString());
     }
 }

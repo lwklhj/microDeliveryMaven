@@ -11,11 +11,103 @@
 <h:head>
     <title>Micro Delivery</title>
 
+
 </h:head>
 <h:body>
-    <ui:composition template="WEB-INF/templates/masterLayout.xhtml">
+    <ui:composition template="templates/masterLayout.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet library="css" name="index.css"  />
+            <div style="padding-top:50px;padding-bottom:40px">
+                <b:jumbotron >
+                    <b:container>
+                        <h1>Welcome to Micro Delivery</h1>
+                        <p>Delivery Whatever you like,Post Whatever you like</p>
+                        <h:form>
+
+                            <h:commandButton value="go to enterprise page" action="/Enterprise/main"></h:commandButton>
+                            <b:column colMd="8" offset="2">
+                                <b:inputText id="swearch" class="search" value="#"  >
+                                    <f:facet name="append">
+                                        <b:commandButton look="primary" value="Search" ajax="false"    iconAwesome="fa-search" icon-align="left"/>
+                                    </f:facet>
+                                </b:inputText>
+                            </b:column>
+
+                        </h:form>
+
+
+
+                    </b:container>
+                </b:jumbotron>
+            </div>
+
+            <b:container>
+                <b:row>
+                    <b:panelGrid  columns="4"   rowClasses="categoryRow ">
+                        <h:form style="margin: 0px auto ">
+                            <p:commandLink id="food" action="category" ajax="false" styleClass="centerContent,link" >
+                                <h:graphicImage value="/resources/images/icon/food.png" styleClass="centerContent"/>
+                                <h:outputText value="Food" styleClass="categoryLinkText"/>
+                            </p:commandLink>
+                        </h:form>
+                        <h:form style="margin: 0px auto ">
+                            <p:commandLink id="beverage" action="category" ajax="false" styleClass="centerContent" >
+                                <h:graphicImage value="/resources/images/icon/beer.png" styleClass="centerContent"/>
+                                <h:outputText value="Beverage" styleClass="categoryLinkText"/>
+                            </p:commandLink>
+                        </h:form>
+                        <h:form style="margin: 0px auto ">
+                            <p:commandLink id="electronic" action="category" ajax="false" styleClass="centerContent" >
+                                <h:graphicImage value="/resources/images/icon/electronic.png" styleClass="centerContent"/>
+                                <h:outputText value="Electronic" styleClass="categoryLinkText"/>
+                            </p:commandLink>
+                        </h:form>
+                        <h:form style="margin: 0px auto ">
+                            <p:commandLink id="grocery" action="category" ajax="false" styleClass="centerContent" >
+                                <h:graphicImage value="/resources/images/icon/groceries.png" styleClass="centerContent"/>
+                                <h:outputText value="Grocery" styleClass="categoryLinkText"/>
+                            </p:commandLink>
+                        </h:form>
+                        <h:form style="margin: 0px auto ">
+                            <p:commandLink id="book" action="category" ajax="false" styleClass="centerContent" >
+                                <h:graphicImage value="/resources/images/icon/library.png" styleClass="centerContent"/>
+                                <h:outputText value="Book" styleClass="categoryLinkText"/>
+                            </p:commandLink>
+                        </h:form>
+                        <h:form style="margin: 0px auto ">
+                            <p:commandLink id="stationary" action="category" ajax="false" styleClass="centerContent" >
+                                <h:graphicImage value="/resources/images/icon/pen.png" styleClass="centerContent"/>
+                                <h:outputText value="Stationary" styleClass="categoryLinkText"/>
+                            </p:commandLink>
+                        </h:form>
+                        <h:form style="margin: 0px auto ">
+                            <p:commandLink id="game" action="category" ajax="false" styleClass="centerContent" >
+                                <h:graphicImage value="/resources/images/icon/gamepad.png" styleClass="centerContent"/>
+                                <h:outputText value="Game" styleClass="categoryLinkText"/>
+                            </p:commandLink>
+                        </h:form>
+                        <h:form style="margin: 0px auto ">
+                            <p:commandLink id="medicine" action="category" ajax="false" styleClass="centerContent" >
+                                <h:graphicImage value="/resources/images/icon/pills.png" styleClass="centerContent"/>
+                                <h:outputText value="Medicine" styleClass="categoryLinkText"/>
+                            </p:commandLink>
+                        </h:form>
+
+                    </b:panelGrid>
+
+                </b:row>
+
+            </b:container>
+        </ui:define>
 
     </ui:composition>
+
+
+
+
+
+
+
 
 
 
