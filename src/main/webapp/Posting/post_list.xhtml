@@ -10,7 +10,7 @@
     </f:metadata>
     <h:body>
         <h1>All Items</h1>
-        <c:forEach var="p" items="#{posting.search(search)}">
+        <c:forEach var="p" items="#{post.searchByCategory(search)}">
             <ui:include src="posting_component.xhtml">
                 <ui:param name="p" value="#{p}"/>
             </ui:include>

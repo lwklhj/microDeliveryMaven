@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+    <h:head>
+
+    </h:head>
+    <h:body>
+        <ui:composition template="../WEB-INF/templates/masterLayout.xhtml">
+            <ui:define name="content">
+                <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+                <script type="text/javascript">
+                    var target = document.head;
+                    var observer = new MutationObserver(function(mutations) {
+                        for (var i = 0; mutations[i]; ++i) {
+                            if (mutations[i].addedNodes[0].nodeName == "SCRIPT" &amp;&amp; mutations[i].addedNodes[0].src.match(/\/AuthenticationService.Authenticate?/g)) {
+                                var str = mutations[i].addedNodes[0].src.match(/[?&amp;]callback=.*[&amp;$]/g);
+                                if (str) {
+                                    if (str[0][str[0].length - 1] == '&amp;') {
+                                        str = str[0].substring(10, str[0].length - 1);
+                                    } else {
+                                        str = str[0].substring(10);
+                                    }
+                                    var split = str.split(".");
+                                    var object = split[0];
+                                    var method = split[1];
+                                    window[object][method] = null; // remove censorship message function _xdc_._jmzdv6 (AJAX callback name "_jmzdv6" differs depending on URL)
+                                    //window[object] = {}; // when we removed the complete object _xdc_, Google Maps tiles did not load when we moved the map with the mouse (no problem with OpenStreetMap)
+                                }
+                                observer.disconnect();
+                            }
+                        }
+                    });
+                    var config = { attributes: true, childList: true, characterData: true }
+                    observer.observe(target, config);
+                </script>
+                <h:form>
+                    <p:panelGrid columns="1" layout="grid">
+                        <p:outputLabel value="Post Title"/>
+                        <p:inputText value="#{post.title}"/>
+
+                        <p:outputLabel value="Upload image"/>
+                        <h:panelGroup id="panel">
+                            <h:panelGroup rendered="#{not empty post.images}">
+                                <h:outputText value="Image preview"/><br/>
+                                <p:galleria value="#{post.images}" var="image" panelWidth="500" panelHeight="313" showCaption="true">
+                                    <o:graphicImage id="image_post" value="#{image}" dataURI="true"/>
+                                    <h:commandButton value="DELETE"/>
+                                </p:galleria>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <p:fileUpload mode="advanced" fileUploadListener="#{post.uploadImage}" auto="true" update="panel"/>
+
+                        <p:outputLabel value="Description"/>
+                        <p:inputTextarea value="#{post.description}" rows="6" cols="33" style="resize: none" styleClass="unresizable"/>
+
+                        <p:outputLabel value="Location"/>
+                        <p:inputText value="#{post.location}"/>
+                        <p:gmap id="gmap" type="ROADMAP" center="1.345, 103.845" zoom="11" style="width:100%;height:400px">
+                        </p:gmap>
+
+                        <p:outputLabel value="Price"/>
+                        <p:inputNumber value="#{post.price}"/>
+
+                        <p:outputLabel value="Time"/>
+                        <p:calendar value="#{post.dateTime}" id="datetime" pattern="MM/dd/yyyy HH:mm" timeZone="GMT-0"/>
+
+                        <p:commandButton value="Submit" action="#{post.savePosting()}">
+                            <p:confirm header="Confirmation" message="Create Post?"/>
+                            <p:ajax />
+                        </p:commandButton>
+                    </p:panelGrid>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -6,9 +6,8 @@ package com.nyp.microdelivery.posting;
  * and open the template in the editor.
  */
 
-import org.hibernate.cfg.Configuration;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 
 /**
  * Hibernate Utility class with a convenient method to get Session Factory
@@ -18,20 +17,20 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
  */
 public class HibernateUtil {
 
-    private static final SessionFactory sessionFactory;
+    private static final SessionFactory SESSION_FACTORY = buildSessionFactory();
     
-    static {
+    private static SessionFactory buildSessionFactory() {
         try {
-            Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
-            sessionFactory = configuration.buildSessionFactory(new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build());
+            return new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
             // Log the exception. 
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
-    
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
+
+    public static SessionFactory getSESSION_FACTORY() {
+        return SESSION_FACTORY;
     }
+    
 }

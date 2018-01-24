@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+<h:head>
+
+</h:head>
+<h:body>
+    <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+        <ui:define name="content">
+            <b:container style="padding-top: 65px">
+                <b:row>
+                    <b:column colMd="12">
+                        <h:form>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Name"></h:outputText>
+                                <h:inputText value="#{addItem.name}" required="true"></h:inputText>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Price"></h:outputText>
+                                <h:inputText value="#{addItem.price}" required="true"></h:inputText>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Picture"></h:outputText>
+                                <h:inputText value="#{addItem.pic}"></h:inputText>
+                            </h:panelGrid>
+                            <p:selectOneMenu value="#{addItem.type}">
+                                <f:selectItem itemValue="food" itemLabel="Food" />
+                                <f:selectItem itemValue="beverage" itemLabel="Beverage" />
+                                <f:selectItem itemValue="electronic" itemLabel="Electronic" />
+                                <f:selectItem itemValue="grocery" itemLabel="Grocery" />
+                                <f:selectItem itemValue="book" itemLabel="Book" />
+                                <f:selectItem itemValue="stationary" itemLabel="Stationary" />
+                                <f:selectItem itemValue="game" itemLabel="Game" />
+                                <f:selectItem itemValue="medicine" itemLabel="Medicine" />
+
+
+                            </p:selectOneMenu>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Description"></h:outputText>
+                                <h:inputTextarea value="#{addItem.description}" ></h:inputTextarea>
+                            </h:panelGrid>
+                            <p:commandButton value="Submit" action="#{addItem.add}"></p:commandButton>
+                        </h:form>
+
+                    </b:column>
+
+                </b:row>
+
+            </b:container>
+
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

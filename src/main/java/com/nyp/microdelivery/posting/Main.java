@@ -5,13 +5,11 @@
  */
 package com.nyp.microdelivery.posting;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import org.hibernate.Query;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.primefaces.component.fileupload.FileUpload;
+
+import java.util.List;
 
 /**
  *
@@ -19,5 +17,9 @@ import org.primefaces.component.fileupload.FileUpload;
  */
 public class Main {
     public static void main(String[] args) {
+        List<Post> list = Post.searchByPostalCd("238858");
+        for(Post p : list) {
+            System.out.println(p.getPostal_cd());
+        }
     }
 }

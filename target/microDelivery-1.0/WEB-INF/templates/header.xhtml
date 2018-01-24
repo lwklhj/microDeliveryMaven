@@ -8,28 +8,25 @@
       xmlns:b="http://bootsfaces.net/ui">
 
 <h:body>
-    <b:navBar position="top" sticky="true" style="background:#515151;">
-        <h:graphicImage value="resources/images/mainIcon.png" alt="main icon"  style="float: left;width: 40px;height:30px;vertical-align: bottom"></h:graphicImage>
-        <h:form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs" role="search">
-            <div class="form-group">
-                <!--> <h:inputText type="text" class="form-control"/><-->
-                <b:inputText value="search_input" class="form-control" placeholder="Search" />
-            </div>
+    <ui:composition>
+        <b:navBar brand="Micro Delivery" brandHref="index.xhtml" inverse="true" fixed="top" style="margin-bottom:20px">
+            <b:navbarLinks>
+                <b:navLink value="Link" href="#"></b:navLink>
+                <b:navLink value="Link" href="#"></b:navLink>
+            </b:navbarLinks>
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
+                    <b:inputText placeholder="Email" fieldSize="sm"/>
+                </div>
+                <div class="form-group">
+                    <b:inputText placeholder="Password" fieldSize="sm"/>
+                </div>
+                #{' '}
+                <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+            </h:form>
+        </b:navBar>
 
+    </ui:composition>
 
-            <h:commandButton id="search_button" type="submit" action="../Posting/post_list.xhtml">
-            </h:commandButton>
-
-
-        </h:form>
-
-
-        <b:navbarLinks pull="right">
-            <b:navLink value="Login" href="#" style="color:white"></b:navLink>
-            <b:navLink value="Join" href="#"></b:navLink>
-
-        </b:navbarLinks>
-
-    </b:navBar>
 </h:body>
 </html>

@@ -1,4 +1,4 @@
-com\nyp\microdelivery\posting\Posting.class
 com\nyp\microdelivery\posting\HibernateUtil.class
-com\nyp\microdelivery\posting\Search.class
+com\nyp\microdelivery\posting\Post.class
 com\nyp\microdelivery\posting\Main.class
+com\nyp\microdelivery\posting\test.class
