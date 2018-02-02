@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+      xml:lang="en" lang="en">
+    <h:head></h:head>
+    <h:body>
+        <b:container>
+            <b:column span="9">
+                <p:dataGrid layout="grid" var="p" value="#{viewPost.getUserBountyHunting()}" paginator="true">
+                    <h:panelGroup rendered="#{not empty p}">
+                        <ui:include src="bounty_component.xhtml">
+                            <ui:param name="edit" value="false"/>
+                            <ui:param name="post" value="#{p}"/>
+                        </ui:include>
+                    </h:panelGroup>
+                </p:dataGrid>
+            </b:column>
+
+        </b:container>
+    </h:body>
+</html>

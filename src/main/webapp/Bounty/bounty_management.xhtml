@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+<h:head></h:head>
+<h:body>
+    <p:outputLabel value="Your listings"/>
+    <b:button value="Create post" look="primary" href="bounty_create.xhtml" icon="plus"/>
+
+    <b:container>
+        <b:column colMd="9">
+            <p:dataGrid layout="grid" var="p" value="#{viewPost.getUserPosts()}" paginator="true">
+                <h:panelGroup rendered="#{not empty p}">
+                    <ui:include src="bounty_component.xhtml">
+                        <ui:param name="edit" value="false"/>
+                        <ui:param name="post" value="#{p}"/>
+                    </ui:include>
+                </h:panelGroup>
+            </p:dataGrid>
+        </b:column>
+    </b:container>
+</h:body>
+</html>

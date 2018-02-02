@@ -1,0 +1,19 @@
+.ui-widget-content{
+    border: none;
+}
+
+ui-paginator-bottom{
+    background: white;
+
+}
+.ui-paginator{
+    text-align: right;
+}
+.ui-widget-header{
+    background: none;
+    border: none;
+}
+.thumbNailCss{
+    border:1px solid #ccc;
+    text-align: center;
+}

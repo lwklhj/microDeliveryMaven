@@ -5,21 +5,17 @@
  */
 package com.nyp.microdelivery.posting;
 
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import java.util.List;
+import com.nyp.microdelivery.posting.entity.BountyMessage;
 
 /**
  *
  * @author Liu Woon Kit
  */
 public class Main {
-    public static void main(String[] args) {
-        List<Post> list = Post.searchByPostalCd("238858");
-        for(Post p : list) {
-            System.out.println(p.getPostal_cd());
+    public static void main(String agrs[]) {
+        new MessageController().insertMessage("Hello there", 21);
+        for(BountyMessage m : new MessageController().getMessages(21)) {
+            System.out.println(m.getText());
         }
     }
 }

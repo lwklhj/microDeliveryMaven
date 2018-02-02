@@ -1,0 +1,9 @@
+.ui-widget-content{
+    border: none;
+}
+#cartItems_list{
+    padding-left:0;
+}
+#datalist_list{
+    padding-left: 0px;
+}

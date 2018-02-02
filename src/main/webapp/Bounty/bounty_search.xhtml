@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+<h:head></h:head>
+<h:body>
+    <b:container>
+        <b:form>
+            <b:column colMd="9">
+                <p:outputLabel value="Use postal code/address to find bounties"/>
+                <b:inputText id="postCdField" required="true" class="search" value="#{postalCdInput}"
+                             validatorMessage="Something went wrong! We do not recognise the postal code you entered. Please try again."
+                             requiredMessage="Please enter your address or postal code">
+                    <p:keyFilter for="postCdField" mask="num"/>
+                    <f:validateLength minimum="6" maximum="6"/>
+                    <f:facet name="append">
+                        <b:commandButton update="@form" look="primary" value="Submit" iconAwesome="fa-search" icon-align="left"/>
+                    </f:facet>
+                </b:inputText>
+                <b:message for="@previous"/>
+                <h:panelGroup id="test">
+                    <p:dataGrid layout="grid" rendered="#{not empty postalCdInput}" columns="3" var="p" value="#{viewPost.getByPostalCd(postalCdInput)}" paginator="true">
+                        <ui:include src="bounty_component.xhtml">
+                            <ui:param name="edit" value="false"/>
+                            <ui:param name="p" value="#{p}"/>
+                        </ui:include>
+                    </p:dataGrid>
+                </h:panelGroup>
+            </b:column>
+        </b:form>
+    </b:container>
+</h:body>
+</html>

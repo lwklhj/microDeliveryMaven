@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+
+<h:head>
+
+</h:head>
+<h:body>
+    <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet library="css" name="uutil.css"  />
+            <h:outputStylesheet library="css" name="checkout.css"  />
+            <b:container styleClass="padHeader">
+                <hr/>
+                <b:row>
+                    <b:column>
+                                <b:column colMd="10">
+                                   <h:outputText value="Item information" style="margin: auto"/>
+                                </b:column>
+
+                                <b:column colMd="1">
+                                    <h:outputText value="Quantity"/>
+                                </b:column>
+                                <b:column colMd="1">
+                                    <h:outputText value="Total price"/>
+                                </b:column>
+
+
+                    </b:column>
+                </b:row>
+                <hr/>
+                <b:row >
+                    <b:column>
+                        <p:dataList value="#{storeDetail.cart.orderItems}" var="cartItems" type="unordered" itemType="none" id="datalist">
+                            <b:row style="border-bottom:1px solid #dddddd;padding:15px" >
+                                <b:column colMd="2">
+                                    <o:graphicImage value="#{cartItems.item.picture}" dataURI="true" rendered="#{cartItems.item.picture != null}" style="height: 150px;width: 150"/>
+                                </b:column>
+                                <b:column colMd="8" style="border-right:1px solid ">
+                                    <h:outputText value="#{cartItems.item.name}" style="font-weight: bold"/>
+                                    <p><h:outputText value="#{cartItems.item.description}" style="padding-top: 5px"/></p>
+                                </b:column>
+                                <b:column colMd="1">
+                                    <h:outputText value="#{cartItems.quantity}" style="font-weight: bold"/>
+                                </b:column>
+                                <b:column colMd="1">
+                                    <h:outputText value="#{cartItems.itemTotalPrice}" style="font-weight: bold"/>
+                                </b:column>
+                            </b:row>
+                        </p:dataList>
+
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column colMd="1" offset="11">
+                        <h:form>
+                            <b:commandButton  action="#{checkOut.checkOut}" value="Check out">
+                                <f:param name="orderId" value="#{checkOut.orderId}" />
+                            </b:commandButton>
+                        </h:form>
+                    </b:column>
+                </b:row>
+            </b:container>
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

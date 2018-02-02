@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui" xmlns:o="http://omnifaces.org/ui">
+<h:head>
+
+</h:head>
+<h:body>
+    <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet library="css" name="shadow.css"  />
+            <h:outputStylesheet library="css" name="storeManagement.css"  />
+            <f:metadata>
+                <f:event type="preRenderView" listener="#{storeManagement.load}"/>
+            </f:metadata>
+            <b:container style="padding-top: 70px">
+
+
+                <h:form>
+                    <b:tabView tabPosition="left"  id="tab">
+                        <b:tab title="Orders">
+                            <p:dataList value="#{storeManagement.orders}" var="order" type="unordered" itemType="none"
+                                        style="border:none" id="orderList">
+                                <b:row>
+                                    <b:column colMd="10">
+                                        <b:panel styleClass="panelMaxHeight">
+                                            <f:facet name="heading">
+
+                                                <h:outputText value="Order No: #{order.orderId} " />
+                                                <h:outputText value="Total $#{order.totalInString}" style="padding-left: 20px"/>
+                                                <p:commandButton actionListener="#{storeManagement.orderComplete(order)}" update="j_idt12:j_idt13:orderList" value="Complete" style="margin-left-left: 30px">
+
+                                                </p:commandButton>
+                                            </f:facet>
+                                            <b:column colMd="9">
+                                                <!--<h:outputText value="#{order.orderItemsString}" style="font-weight: bold" escape="true"/>-->
+                                                <p:dataList value="#{order.orderItems}" var="orderItem" type="unordered" itemType="none"
+                                                            style="border:none">
+                                                    <h:outputText value="#{orderItem.itemInfo}"/>
+                                                </p:dataList>
+                                            </b:column>
+                                        </b:panel>
+                                    </b:column>
+
+                                </b:row>
+
+
+
+
+
+                            </p:dataList>
+                        </b:tab>
+                        <b:tab title="Manage Item">
+
+                            <p:toolbar id="toolabrSticky">
+                                <f:facet name="right">
+                                    <p:commandButton update="j_idt12:j_idt24:datalist itemDetail" actionListener="#{storeManagement.resetSelectItem}" oncomplete="PF('itemDialog').show()" value="New"/>
+                                </f:facet>
+                            </p:toolbar>
+                            <p:sticky target="toolabrSticky" style="padding-top: 65px"/>
+                            <hr/>
+                            <b:row>
+                                <b:column>
+                                    <b:column colMd="1">
+                                        <h:outputText value="Change" style="margin: auto"/>
+                                    </b:column>
+
+                                    <b:column colMd="10" style="text-alignment:center">
+                                        <h:outputText value="Item information"/>
+                                    </b:column>
+                                    <b:column colMd="1">
+                                        <h:outputText value="Delete"/>
+                                    </b:column>
+                                </b:column>
+                            </b:row>
+                            <hr/>
+
+
+
+
+                            <p:dataList value="#{storeManagement.itemList}" var="item" type="unordered" itemType="none"
+                                        style="border:none" id="datalist">
+                                <b:row style="border-bottom:1px solid #dddddd;padding:15px" >
+                                    <b:column colMd="1">
+                                        <p:commandButton  update="itemDetail" actionListener="#{storeManagement.update(item)}"  oncomplete="PF('itemDialog').show()"   value="Change">
+
+                                        </p:commandButton>
+                                    </b:column>
+                                    <b:column colMd="10">
+                                        <b:column colMd="3">
+                                            <o:graphicImage value="#{item.picture}" dataURI="true" rendered="#{item.picture != null}" style="height: 150px;width: 150"/>
+                                        </b:column>
+                                        <b:column colMd="6">
+                                            <h:outputText value="#{item.name}" style="font-weight: bold"/>
+                                            <p><h:outputText value="#{item.description}" style="padding-top: 5px"/></p>
+                                        </b:column>
+                                        <b:column colMd="1">
+                                            <h:outputText value="$#{item.price}" style="font-weight: bold"/>
+                                        </b:column>
+
+                                    </b:column>
+                                    <b:column colMd="1">
+                                        <p:commandButton action="#{storeManagement.deleteItem}"   value="Delete" style="float: right" update="j_idt12:j_idt24:datalist">
+                                            <f:setPropertyActionListener value="#{item}" target="#{storeManagement.selectItem}" />
+                                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+                                        </p:commandButton>
+                                    </b:column>
+                                </b:row>
+                            </p:dataList>
+
+
+
+
+
+                        </b:tab>
+                        <b:tab title="Store detail">
+
+                        </b:tab>
+                    </b:tabView>
+
+                </h:form>
+
+
+            </b:container>
+            <p:dialog header="Details" widgetVar="itemDialog" modal="true" resizable="false">
+                <p:outputPanel id="itemDetail" style="text-align:center;">
+                    <h:form enctype="multipart/form-data">
+                        <p:outputLabel value="Item image"></p:outputLabel>
+                        <p:fileUpload fileUploadListener="#{storeManagement.handleFileUpload}" fileLimit="1" update="@this"/>
+                        <p:panelGrid  rendered="#{not empty storeManagement.selectItem}">
+
+                            <p:outputLabel value="Name"></p:outputLabel>
+                            <b:inputText value="#{storeManagement.selectItem.name}"></b:inputText>
+                            <p:outputLabel value="Price"></p:outputLabel>
+                            <b:inputText value="#{storeManagement.selectItem.price}"  required="true" ><f:convertNumber pattern="#0.00" /></b:inputText>
+                            <p:outputLabel value="Description"></p:outputLabel>
+                            <b:inputTextarea value="#{storeManagement.selectItem.description}" ></b:inputTextarea>
+                        </p:panelGrid>
+                        <p:commandButton  onclick="PF('itemDialog').hide()" value="Cancel"/>
+                        <p:commandButton  action="#{storeManagement.saveItem}"  update="j_idt12:j_idt24:datalist" oncomplete="PF('itemDialog').hide()"  value="Save"  />
+                    </h:form>
+
+                </p:outputPanel>
+            </p:dialog>
+
+
+            <p:confirmDialog global="true">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+
+
+
+
+
+        </ui:define>
+
+    </ui:composition>
+</h:body>
+</html>

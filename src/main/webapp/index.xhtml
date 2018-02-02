@@ -6,7 +6,6 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:b="http://bootsfaces.net/ui">
 <h:head>
     <title>Micro Delivery</title>
@@ -14,13 +13,10 @@
 
 </h:head>
 <h:body>
-<<<<<<< HEAD
     <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
-=======
-    <ui:composition template="templates/masterLayout.xhtml">
->>>>>>> pr/2
         <ui:define name="content">
             <h:outputStylesheet library="css" name="index.css"  />
+
             <div style="padding-top:50px;padding-bottom:40px">
                 <b:jumbotron >
                     <b:container>
@@ -28,7 +24,7 @@
                         <p>Delivery Whatever you like,Post Whatever you like</p>
                         <h:form>
 
-                            <h:commandButton value="go to enterprise page" action="/Enterprise/main"></h:commandButton>
+                            <h:link value="go to enterprise page" outcome="/Enterprise/storeManagement"></h:link>
                             <b:column colMd="8" offset="2">
                                 <b:inputText id="swearch" class="search" value="#"  >
                                     <f:facet name="append">
@@ -47,6 +43,22 @@
 
             <b:container>
                 <b:row>
+                    <b:column colMd="4" offset="4">
+                        <h2 style="text-align: center"><h:outputText value="Browse all business" ></h:outputText></h2>
+                        <p:link value="All store" styleClass="centerContent" outcome="/Enterprise/Stores"></p:link>
+
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column>
+                        <hr></hr>
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column colMd="4" offset="4">
+                        <h2 style="text-align: center"><h:outputText value="Browse all Store" ></h:outputText></h2>
+
+                    </b:column>
                     <b:panelGrid  columns="4"   rowClasses="categoryRow ">
                         <h:form style="margin: 0px auto ">
                             <p:commandLink id="food" action="category" ajax="false" styleClass="centerContent,link" >

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+<h:head>
+
+</h:head>
+<h:body>
+    <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet library="css" name="stores.css"  />
+            <h:outputStylesheet library="css" name="uutil.css"  />
+            <f:metadata>
+                <f:event type="preRenderView" listener="#{stores.load}"/>
+            </f:metadata>
+
+            <b:container>
+                <b:row>
+                    <!--<b:column colMd="2" >
+                        <b:panel  title="Static sidebar" id="cateLink" styleClass="padHeader">
+                            <b:listLinks>
+                                <b:navLink header="Category" />
+                                <b:navCommandLink value="Food"  outcome="#foodPanel"></b:navCommandLink>
+                                <b:navCommandLink value="Beverage" ></b:navCommandLink>
+                                <b:navCommandLink value="Electronic" ></b:navCommandLink>
+                                <b:navCommandLink value="Grocery" ></b:navCommandLink>
+                                <b:navCommandLink value="Book" ></b:navCommandLink>
+                                <b:navCommandLink value="Stationary" ></b:navCommandLink>
+                                <b:navCommandLink value="Game" ></b:navCommandLink>
+                                <b:navCommandLink value="Medicine" outcome="#mediPanel"></b:navCommandLink>
+
+                                <b:navLink></b:navLink>
+                            </b:listLinks>
+                        </b:panel>
+                        <p:sticky target="cateLink"/>
+                    </b:column>-->
+                    <b:column colMd="10" styleClass="padHeader">
+
+                        <b:panel id="foodPanel">
+                            <h3 style="margin: 0 auto">FOOD</h3>
+                            <h:outputText value="No store available" rendered="#{stores.foodList.size() ==0}"></h:outputText>
+                            <p:dataGrid var="item" value="#{stores.foodList}" columns="3" layout="grid" rendered="#{stores.foodList.size() !=0}"
+                                        rows="4" paginator="true"
+                                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
+                                        style="margine-top:20px">
+                                <p:link outcome="storeDetail">
+                                    <f:param name="storeId" value="#{item.id}" />
+                                    <b:thumbnail styleClass="thumbNailCss">
+                                        <o:graphicImage value="#{item.picture}" rendered="#{item.picture !=null}" dataUri="true" style="width: 100px;height: 100px"/>
+                                        <f:facet name="caption">
+                                            <h3><h:outputText value="#{item.companyName}" /></h3>
+                                        </f:facet>
+                                    </b:thumbnail>
+                                </p:link>
+                            </p:dataGrid>
+                        </b:panel>
+
+                        <b:panel id="elecPanel">
+                            <h3 style="margin: 0 auto">Beverage</h3>
+                            <h:outputText value="No store available" rendered="#{stores.beverageList.size() ==0}"></h:outputText>
+                            <p:dataGrid var="item" value="#{stores.beverageList}" columns="3" layout="grid" rendered="#{stores.beverageList.size() !=0}"
+                                        rows="4" paginator="true"
+                                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
+                                        style="margine-top:20px">
+                                <h:panelGroup style="border: 1px solid black">
+                                    <h:graphicImage value="resources/images/icon/beer.png" style="width: 100px;height: 100px"/>
+                                    <h:outputText value="#{item.companyName}"/>
+                                </h:panelGroup>
+                            </p:dataGrid>
+                        </b:panel>
+                        <hr></hr>
+                        <b:panel id="beveragePanel">
+                            <h3 style="margin: 0 auto">Beverage</h3>
+                            <h:outputText value="No store available" rendered="#{stores.electronicList.size() ==0}"></h:outputText>
+                            <p:dataGrid var="item" value="#{stores.electronicList}" columns="3" layout="grid" rendered="#{stores.electronicList.size() !=0}"
+                                        rows="4" paginator="true"
+                                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
+                                        style="margine-top:20px">
+                                <h:panelGroup style="border: 1px solid black">
+                                    <o:graphicImage value="resources/images/icon/beer.png" dataUri="true" style="width: 100px;height: 100px"/>
+                                    <h:outputText value="#{item.companyName}"/>
+                                </h:panelGroup>
+                            </p:dataGrid>
+                        </b:panel>
+
+                        <b:panel id="groceryPanel">
+                            <h3 style="margin: 0 auto">Grocery</h3>
+                            <h:outputText value="No store available" rendered="#{stores.groceryList.size() ==0}"></h:outputText>
+                            <p:dataGrid var="item" value="#{stores.groceryList}" columns="3" layout="grid" rendered="#{stores.foodList.size() !=0}"
+                                        rows="4" paginator="true"
+                                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
+                                        style="margine-top:20px">
+                                <h:panelGroup style="border: 1px solid black">
+                                    <h:graphicImage value="resources/images/icon/beer.png" style="width: 100px;height: 100px"/>
+                                    <h:outputText value="#{item.companyName}"/>
+                                </h:panelGroup>
+                            </p:dataGrid>
+                        </b:panel>
+
+                        <b:panel id="bookPanel">
+                            <h3 style="margin: 0 auto">BOOK</h3>
+                            <h:outputText value="No store available" rendered="#{stores.bookList.size() ==0}"></h:outputText>
+                            <p:dataGrid var="item" value="#{stores.bookList}" columns="3" layout="grid" rendered="#{stores.bookList.size() !=0}"
+                                        rows="4" paginator="true"
+                                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
+                                        style="margine-top:20px">
+                                <h:panelGroup style="border: 1px solid black">
+                                    <h:graphicImage value="resources/images/icon/beer.png" style="width: 100px;height: 100px"/>
+                                    <h:outputText value="#{item.companyName}"/>
+                                </h:panelGroup>
+                            </p:dataGrid>
+                        </b:panel>
+                        <hr></hr>
+                        <b:panel id="stationaryPanel">
+                            <h3 style="margin: 0 auto">STATIONARY</h3>
+                            <h:outputText value="No store available" rendered="#{stores.stationaryList.size() ==0}"></h:outputText>
+                            <p:dataGrid var="item" value="#{stores.stationaryList}" columns="3" layout="grid" rendered="#{stores.stationaryList.size() !=0}"
+                                        rows="4" paginator="true"
+                                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
+                                        style="margine-top:20px">
+                                <h:panelGroup style="border: 1px solid black">
+                                    <h:graphicImage value="resources/images/icon/beer.png" style="width: 100px;height: 100px"/>
+                                    <h:outputText value="#{item.companyName}"/>
+                                </h:panelGroup>
+                            </p:dataGrid>
+                        </b:panel>
+                        <hr></hr>
+                        <b:panel id="gamePanel">
+                            <h3 style="margin: 0 auto">GAME</h3>
+                            <h:outputText value="No store available" rendered="#{stores.gameList.size() ==0}"></h:outputText>
+                            <p:dataGrid var="item" value="#{stores.gameList}" columns="3" layout="grid" rendered="#{stores.gameList.size() !=0}"
+                                        rows="4" paginator="true"
+                                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
+                                        style="margine-top:20px">
+                                <h:panelGroup style="border: 1px solid black">
+                                    <h:graphicImage value="resources/images/icon/beer.png" style="width: 100px;height: 100px"/>
+                                    <h:outputText value="#{item.companyName}"/>
+                                </h:panelGroup>
+                            </p:dataGrid>
+                        </b:panel>
+                        <hr></hr>
+                        <b:panel id="mediPanel">
+                            <h3 style="margin: 0 auto">MEDICINE</h3>
+                            <h:outputText value="No store available" rendered="#{stores.medicineList.size() ==0}"></h:outputText>
+                            <p:dataGrid var="item" value="#{stores.medicineList}" columns="3" layout="grid" rendered="#{stores.medicineList.size() !=0}"
+                                        rows="4" paginator="true"
+                                        paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
+                                        style="margine-top:20px">
+                                <h:panelGroup style="border: 1px solid black">
+                                    <h:graphicImage value="resources/images/icon/beer.png" style="width: 100px;height: 100px"/>
+                                    <h:outputText value="#{item.companyName}"/>
+                                </h:panelGroup>
+                            </p:dataGrid>
+                        </b:panel>
+
+                    </b:column>
+
+                </b:row>
+            </b:container>
+
+
+        </ui:define>
+
+
+    </ui:composition>
+</h:body>
+</html>

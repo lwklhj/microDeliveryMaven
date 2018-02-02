@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xml:lang="en" lang="en">
+    <h:head>
+        <title>Bounty board</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../WEB-INF/templates/masterLayout.xhtml">
+            <ui:define name="content">
+                <b:container>
+                    <b:tabView tabPosition="left" contentStyle="border-right: 1px solid #ddd;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding:10px">
+                        <b:tab title="Search for bounties">
+                            <ui:include src="bounty_search.xhtml"/>
+                        </b:tab>
+                        <b:tab title="View your bounties">
+                            <ui:include src="bounty_management.xhtml"/>
+                        </b:tab>
+                        <b:tab title="Bounties you are doing">
+                            <ui:include src="bounty_hunting_list.xhtml"/>
+                        </b:tab>
+                    </b:tabView>
+                </b:container>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

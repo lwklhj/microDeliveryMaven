@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:of="http://omnifaces.org/functions">
+    <ui:component>
+        <h:head></h:head>
+        <ui:param name="editRequest" value="#{edit}" converterId="javax.faces.Boolean"/>
+
+        <h:link outcome="#{editRequest ? 'bounty_create' : 'bounty'}">
+            <f:param name="id" value="#{p.id}"/>
+            <b:thumbnail>
+                <o:graphicImage rendered="#{not empty p.images}"
+                                style="object-fit: cover; width: 100%; height: 100%"
+                                value="#{p.getImages().get(0)}"
+                                dataURI="true"/>
+                <o:graphicImage rendered="#{empty p.images}"
+                                style="object-fit: cover; width: 180px; height: 180px;"
+                                name="images/alt-image.jpg"
+                                dataURI="true"/>
+                <f:facet name="caption">
+                    <b:panelGrid columns="1">
+                        <h3>#{p.title}</h3>
+                        <b:iconAwesome name="location-arrow">#{p.deliveryAddr}</b:iconAwesome>
+                        <b:iconAwesome name="usd">#{p.price}</b:iconAwesome>
+                        <b:iconAwesome name="calendar">#{of:formatDate(p.dateTime, 'dd/MM/yyyy hh:mm a')}</b:iconAwesome>
+                    </b:panelGrid>
+                </f:facet>
+            </b:thumbnail>
+        </h:link>
+    </ui:component>
+</html>

@@ -52,6 +52,16 @@
             <version>2.6</version>
         </dependency>
         <dependency>
+            <groupId>net.glxn</groupId>
+            <artifactId>qrgen</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>qrcode-utils</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
             <groupId>javax.faces</groupId>
             <artifactId>jsf-api</artifactId>
             <version>LATEST</version>
@@ -61,6 +71,12 @@
             <artifactId>jsf-impl</artifactId>
             <version>LATEST</version>
         </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>LATEST</version>
+        </dependency>
+
     </dependencies>
 
     <build>

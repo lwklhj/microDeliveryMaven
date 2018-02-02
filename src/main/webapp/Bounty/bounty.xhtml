@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:of="http://omnifaces.org/functions">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="../WEB-INF/templates/masterLayout.xhtml">
+            <f:metadata>
+                <f:viewParam id="idParam" name="id" value="#{viewPost.post}" required="true" requiredMessage="Unable to find bounty" converter="#{bountyConverter}" converterMessage="Error message"/>
+            </f:metadata>
+
+            <ui:define name="content">
+                <b:message for="idParam"/>
+                <b:container>
+                    <b:panelGrid colSpans="6,6">
+                        <h:panelGroup>
+                            <p:galleria rendered="#{not empty viewPost.post.images}" value="#{viewPost.post.images}" var="image" panelWidth="500" panelHeight="313" style="width: 100%;">
+                                <o:graphicImage style="object-fit: contain; width: 100%; height: 100%" id="image_post" value="#{image}" dataURI="true"/>
+                            </p:galleria>
+                            <o:graphicImage rendered="#{empty viewPost.post.images}"
+                                            style="object-fit: cover; width: 180px; height: 180px;"
+                                            name="images/alt-image.jpg"
+                                            dataURI="true"/>
+                        </h:panelGroup>
+                        <b:panel>
+                            <b:panelGrid columns="1" span="12">
+                                <h3>Item(s) delivery request by Hefei</h3>
+
+
+                                <h:outputText value="Title: #{viewPost.post.title}"/>
+
+                                <h:panelGroup>
+                                    <b:iconAwesome name="tag"/>
+                                    <h:outputText value="#{viewPost.post.price}">
+                                        <f:convertNumber type="currency" currencySymbol="S$" locale="en_SG" />
+                                    </h:outputText>
+                                </h:panelGroup>
+
+                                <b:iconAwesome name="clock-o">#{of:formatDate(viewPost.post.dateTime, 'dd/MM/yyyy hh:mm a')}</b:iconAwesome>
+
+                                <h:panelGroup>
+                                    <h:outputText value="Wants it by:"/>
+                                    <b:iconAwesome name="clock-o"/>
+                                    <h:outputText value="#{of:formatDate(viewPost.post.dateTime, 'dd/MM/yyyy hh:mm a')}" />
+                                </h:panelGroup>
+
+                                <b:iconAwesome name="info-circle">Additional information : #{viewPost.post.description}</b:iconAwesome>
+
+                                <h:outputText value="Status : #{viewPost.post.status}"/>
+
+                                <b:iconAwesome name="location-arrow">Delivery Address: #{viewPost.post.deliveryAddr}</b:iconAwesome>
+
+                                <h:form enctype="multipart/form-data">
+                                    <b:panelGrid columns="1">
+                                        <b:commandButton rendered="#{(viewPost.checkIsCourier() || viewPost.checkIsOp()) == false}" value="Accept" actionListener="#{viewPost.accept()}"/>
+
+                                        <b:column rendered="#{viewPost.checkIsCourier()}">
+                                            <b:column colMd="4" rendered="#{viewPost.post.status ne 'completed'}">
+                                                <p:growl id="messages" showDetail="true" />
+                                                <h:outputText value="Delivery confirmation code"/>
+                                                <p:fileUpload mode="advanced" fileUploadListener="#{viewPost.decodeQRCode}" auto="true"/>
+                                                <!--<b:inputText label="Delivery confirmation code" required="true" value="#{confirmationCdInput}"/>-->
+                                                <!--<b:message for="@previous"/>-->
+                                                <!--<b:commandButton look="primary" value="Submit" action="#{viewPost.cashIn(confirmationCdInput)}"/>-->
+                                            </b:column>
+                                        </b:column>
+
+                                        <b:column rendered="#{viewPost.checkIsOp()}">
+                                            <p:barcode value="#{viewPost.post.confirmationCd}" type="qr"/>
+                                            <h:outputText value="#{viewPost.post.confirmationCd}"/>
+                                            <b:button look="primary" value="Edit" outcome="bounty_create">
+                                                <f:param name="id" value="#{viewPost.post.id}"/>
+                                            </b:button>
+                                        </b:column>
+                                    </b:panelGrid>
+                                </h:form>
+                            </b:panelGrid>
+                        </b:panel>
+
+                        <b:panel rendered="#{(viewPost.checkIsCourier() || viewPost.checkIsOp()) == true}">
+                        <h:outputText value="Bounty Comments"/>
+                            <b:form>
+                                <h:panelGroup id="z">
+                                    <ui:repeat value="#{messageController.getMessages(viewPost.post.id)}" var="m">
+                                        <h:panelGroup>
+                                            <b:column span="12">
+                                                <b:row>
+                                                    <b:column span="6">
+                                                        John
+                                                    </b:column>
+                                                    <b:column span="6">
+                                                        #{m.date}
+                                                    </b:column>
+                                                </b:row>
+                                                <b:row>#{m.text}</b:row>
+                                            </b:column>
+                                        </h:panelGroup>
+
+                                    </ui:repeat>
+                                </h:panelGroup>
+                                <p:poll interval="10" update="z"/>
+                                <!--<b:inputText value="#{inputValue}"/>-->
+                                <!--<b:commandButton immediate="true" value="Post a new comment" process="@this" update="@form" actionListener="#{messageController.insertMessage(inputValue,viewPost.post.id)}"/>-->
+                                <b:inputText value="inputValue"/>
+                                #{inputValue}
+                                <b:commandButton process="@form" update="@form" value="Post a new comment" actionListener="#{messageController.insertMessage('test', viewPost.post.id)}"/>
+                            </b:form>
+                        </b:panel>
+
+                        <b:panel span="12">
+                            <b:panelGrid columns="1" span="12">
+                                <h:outputText value="Where to find this item(s)"/>
+                                <b:iconAwesome name="home">#{viewPost.post.storeName}</b:iconAwesome>
+                                <b:iconAwesome name="location-arrow">#{viewPost.post.storeLocation}</b:iconAwesome>
+                            </b:panelGrid>
+
+                        </b:panel>
+
+                    </b:panelGrid>
+                </b:container>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

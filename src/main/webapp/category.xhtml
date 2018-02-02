@@ -4,8 +4,58 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<h:body>
+    <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+        <ui:define name="content">
+            <f:metadata>
+                <f:event type="preRenderView" listener="#{category.load}"/>
+            </f:metadata>
+            <b:container>
+                <div style="margine-top:65px">
+                <b:row >
+                    <b:column colMd="2">
+                        <b:panel look="primary" title="Static sidebar" >
+                            <b:listLinks>
+                                <b:navLink header="Category" />
+                                <b:navCommandLink value="Food"></b:navCommandLink>
+                                <b:navCommandLink value="Beverage"></b:navCommandLink>
+                                <b:navCommandLink value="Electronic"></b:navCommandLink>
+                                <b:navCommandLink value="Grocery"></b:navCommandLink>
+                                <b:navCommandLink value="Book"></b:navCommandLink>
+                                <b:navCommandLink value="Stationary"></b:navCommandLink>
+                                <b:navCommandLink value="Medicine"></b:navCommandLink>
+                                <b:navCommandLink value="Game"></b:navCommandLink>
+
+                                <b:navLink></b:navLink>
+
+                            </b:listLinks>
+                        </b:panel>
+
+                    </b:column>
+                    <b:column colMd="9" offset="1">
+                        <p:dataGrid var="enItem" value="#{category.items}" columns="3" layout="grid"
+                                    rows="30" paginator="true" id="enItem"
+                                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                    rowsPerPageTemplate="6,12,16,30" style="margine-top:20px">
+                            <h:panelGroup style="border: 1px solid black">
+                                <h:graphicImage value="resources/images/icon/beer.png" style="width: 100px;height: 100px"/>
+                                <h:outputText value="#{enItem.name}"/>
+                            </h:panelGroup>
+                        </p:dataGrid>
+
+                    </b:column>
+
+                </b:row>
+                </div>
+            </b:container>
+
+        </ui:define>
+    </ui:composition>
+</h:body>
 </html>

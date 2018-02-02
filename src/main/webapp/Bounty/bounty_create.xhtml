@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:of="http://omnifaces.org/functions">
+<h:head>
+
+</h:head>
+<h:body>
+    <ui:composition template="../WEB-INF/templates/masterLayout.xhtml">
+        <f:metadata>
+            <o:viewParam name="id" value="#{bountyCreate.bounty}" converter="#{bountyConverter}"/>
+        </f:metadata>
+        <ui:define name="content">
+            <b:container>
+                <b:form>
+                    <h2>Bounty creation</h2>
+                    <p:wizard>
+                        <p:tab title="Request information">
+                            <b:inputText label="Name of your item(s)" value="#{bountyCreate.bounty.title}" required="true" requiredMessage="Enter your item(s) request"/>
+                            <b:message for="@previous"/>
+
+                            <p:outputLabel value="Upload image"/>
+                            <h:panelGroup id="panel">
+                                <h:panelGroup rendered="#{not empty bountyCreate.bounty.images}">
+                                    <h:outputText value="Image preview"/><br/>
+                                    <p:galleria value="#{bountyCreate.bounty.images}" var="image" panelWidth="500" panelHeight="313">
+                                        <o:graphicImage style="object-fit: contain; width: 100%; height: 100%" id="image_post" value="#{image}" dataURI="true"/>
+                                        <b:commandButton update="panel" iconAwesome="trash" look="danger" style="position:absolute; top:0; right:0; z-index:10;"/>
+                                    </p:galleria>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <p:fileUpload mode="advanced" fileUploadListener="#{bountyCreate.uploadImage}" auto="true" update="panel"/>
+
+                            <b:inputTextarea label="More info about your item(s)" value="#{bountyCreate.bounty.description}" rows="6" cols="33" style="resize: none" styleClass="unresizable"/>
+
+                            <b:inputText label="Total price of item(s)" value="#{bountyCreate.bounty.price}" required="true" requiredMessage="Enter your item(s) price">
+                                <p:keyFilter mask="num"/>
+                                <f:convertNumber pattern="#0.00"/>
+                                <f:facet name="prepend">
+                                    <h:outputText value="$"/>
+                                </f:facet>
+                            </b:inputText>
+                            <b:message for="@previous"/>
+
+                            <b:row>
+                                <b:column>
+                                    <b:inputText required="true" label="What shop/store is this from?" value="#{bountyCreate.bounty.storeName}"/>
+                                    <b:message for="@previous"/>
+                                </b:column>
+                                <b:column>
+                                    <b:inputText required="true" label="Location of store/shop" value="#{bountyCreate.bounty.storeLocation}"/>
+                                    <b:message for="@previous"/>
+                                </b:column>
+                            </b:row>
+
+
+                        </p:tab>
+
+
+                        <p:tab title="Address">
+                            <b:dateTimePicker required="true" requiredMessage="When do you want this to be delivered?" iconPosition="left" side-by-side="true" label="Time" value="#{bountyCreate.bounty.dateTime}" showDate="true" showTime="true" minDate="#{of:formatDate(now, 'MM/dd/yyyy HH:mm')}"/>
+                            <b:message for="@previous"/>
+                            <b:inputText required="true" label="Your address" value="#{bountyCreate.bounty.deliveryAddr}"/>
+                            <b:message for="@previous"/>
+                            <b:inputText required="true" label="Postal Code" value="#{bountyCreate.bounty.deliveryPostalCd}">
+                                <p:keyFilter mask="num"/>
+                                <f:validateLength minimum="6" maximum="6"/>
+                            </b:inputText>
+                            <b:message for="@previous"/>
+                            <b:commandButton style="float:right;" look="primary" value="Submit" action="#{bountyCreate.saveOrUpdate()}">
+                                <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+                            </b:commandButton>
+                            <b:commandButton look="danger" value="Delete" rendered="#{bountyCreate.bounty.id > 0}" action="#{bountyCreate.deleteBounty}">
+                                <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+                            </b:commandButton>
+                        </p:tab>
+                    </p:wizard>
+                </b:form>
+            </b:container>
+
+            <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+            <script type="text/javascript">
+                var target = document.head;
+                var observer = new MutationObserver(function(mutations) {
+                    for (var i = 0; mutations[i]; ++i) {
+                        if (mutations[i].addedNodes[0].nodeName == "SCRIPT" &amp;&amp; mutations[i].addedNodes[0].src.match(/\/AuthenticationService.Authenticate?/g)) {
+                            var str = mutations[i].addedNodes[0].src.match(/[?&amp;]callback=.*[&amp;$]/g);
+                            if (str) {
+                                if (str[0][str[0].length - 1] == '&amp;') {
+                                    str = str[0].substring(10, str[0].length - 1);
+                                } else {
+                                    str = str[0].substring(10);
+                                }
+                                var split = str.split(".");
+                                var object = split[0];
+                                var method = split[1];
+                                window[object][method] = null; // remove censorship message function _xdc_._jmzdv6 (AJAX callback name "_jmzdv6" differs depending on URL)
+                                //window[object] = {}; // when we removed the complete object _xdc_, Google Maps tiles did not load when we moved the map with the mouse (no problem with OpenStreetMap)
+                            }
+                            observer.disconnect();
+                        }
+                    }
+                });
+                var config = { attributes: true, childList: true, characterData: true }
+                observer.observe(target, config);
+            </script>-->
+
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
