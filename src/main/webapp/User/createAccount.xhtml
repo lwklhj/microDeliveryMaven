@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xml:lang="en" lang="en"
+      xmlns:o="http://omnifaces.org/ui">
+<h:head>
+    <title>Create Account</title>
+</h:head>
+<h:body>
+    <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet library="css" name="register.css"  />
+            <b:container style="padding-top:70px">
+                <b:row>
+                    <b:column colMd="8" offset="2">
+                        <h:form>
+
+                                    <b:row></b:row>
+
+                                    <b:row>
+                                        <b:column col-md="2" offset="4">
+                                            <h:outputText value="Username" for="userName"/>
+                                        </b:column>
+                                        <b:column col-md="3">
+                                            <b:inputText placeholder="Username" id="userName" ajax="true" autocomplete="false" required="true" requiredMessage="This username is required" value="#{createAcct.user.userName}">
+                                            <f:validator validatorId="validateUser"/>
+                                            </b:inputText>
+                                            <b:message for="userName" />
+
+                                        </b:column>
+
+                                        <b:column col-md="2" offset="4">
+                                            <h:outputText value="Email" for="email"/>
+                                        </b:column>
+                                        <b:column col-md="3">
+                                            <b:inputText placeholder="Email" id="email"  mask="email" ajax="true" autocomplete="false" required="true" requiredMessage="This email is required" value="#{createAcct.user.email}">
+                                            </b:inputText>
+                                            <b:message for="email" />
+                                        </b:column>
+                                    </b:row>
+                                    <b:row>
+                                        <b:column col-md="2" offset="4">
+                                            <h:outputText value="Address" for="addr"/>
+                                        </b:column>
+                                        <b:column col-md="5">
+                                        <b:inputText placeholder="Address" id="addr"  ajax="true" autocomplete="false" required="true" requiredMessage="This address is required" value="#{createAcct.user.addr}">
+                                        </b:inputText>
+                                        <b:message for="addr" />
+                                        </b:column>
+                                    </b:row>
+                                    <b:row>
+                                        <b:column col-md="2" offset="4">
+                                            <h:outputText value="Phone" for="phone"/>
+                                        </b:column>
+                                        <b:column col-md="3">
+                                            <b:inputText placeholder="Phone" id="phone" validatorMessage="Please enter correct phone number" maxlength="8"  ajax="true" autocomplete="false"  required="true" requiredMessage="This phone is required" value="#{createAcct.user.phoneNo}">
+                                                <f:validateRegex pattern="^[0-9]{8}$"/>
+                                            </b:inputText>
+                                            <b:message for="phone" />
+                                        </b:column>
+                                    </b:row>
+                            <b:row>
+                                <b:column col-md="2" offset="4">
+
+                                    <h:outputText value="Password" for="passWord"/>
+                                </b:column>
+
+                                <b:column col-md="3">
+                                    <b:inputSecret  placeholder="Password" id="passWord" required="true" requiredMessage="Please enter password" validatorMessage="required 6 to 20 characters,must contain one uppercase,one lower case">
+                                        <f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})"/>
+                                    </b:inputSecret>
+
+                                    <b:message for="passWord"/>
+                                </b:column>
+                            </b:row>
+                            <b:row>
+                                <b:column col-md="2" offset="4">
+                                    <h:outputText value="Comfirm Password" for="Compasswd"/>
+                                </b:column>
+
+                                <b:column col-md="3">
+                                    <b:inputSecret placeholder="Confirm Password" id="Compasswd" required="true"  value="#{createAcct.user.password}" requiredMessage="Please confirm password"/>
+                                    <b:message for="Compasswd"/>
+                                    <o:validateEqual id="equal" components="passWord Compasswd" message="Password are not equal" showMessageFor="passWord"/>
+                                </b:column>
+                            </b:row>
+                                    <b:row>
+                                        <b:column span="4" offset="5">
+                                            <b:commandButton value="Register"  look="primary" style="width:100%" action="#{createAcct.register}"/>
+                                        </b:column>
+                                    </b:row>
+
+
+                        </h:form>
+                    </b:column>
+                </b:row>
+
+
+
+            </b:container>
+        </ui:define>
+    </ui:composition>
+
+</h:body>
+</html>

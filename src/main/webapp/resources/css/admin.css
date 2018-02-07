@@ -1,0 +1,32 @@
+#userDiv {
+    display: block;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ui-growl {
+    left:50px;
+    top:70px;
+}
+
+.ui-panelgrid td, .ui-panelgrid tr
+{
+    border-style: none !important
+}
+
+/*.ui-panelgrid ui-widget {
+    border: none !important;
+}
+
+#displayUserData {
+    border: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#displayUserData:userData.ui-panelgrid ui-widget tr {
+    border-style: none;
+    border: none;
+}*/
+

@@ -1,6 +1,5 @@
 package com.nyp.microdelivery.enterprise;
 
-
 import com.nyp.microdelivery.enterprise.Entity.Store;
 import com.nyp.microdelivery.enterprise.Entity.StoreDao;
 
@@ -90,7 +89,7 @@ public class Stores implements Serializable{
     public void load(){
 
 
-        storeList = StoreDao.getAllComany();
+        storeList =StoreDao.getAllComany();
 
         foodList=getStoreByType("food");
         electronicList=getStoreByType("electronic");

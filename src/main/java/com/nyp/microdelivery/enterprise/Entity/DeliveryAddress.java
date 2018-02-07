@@ -21,6 +21,8 @@ public class DeliveryAddress {
 
     @Column(name = "userId")
     private int userId;
+    @Column(name = "receiveName")
+    private String receiveName;
 
     public int getAddrId() {
         return addrId;
@@ -53,5 +55,13 @@ public class DeliveryAddress {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getReceiveName() {
+        return receiveName;
+    }
+
+    public void setReceiveName(String receiveName) {
+        this.receiveName = receiveName;
     }
 }

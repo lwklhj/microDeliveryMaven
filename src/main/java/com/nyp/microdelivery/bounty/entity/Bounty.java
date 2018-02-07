@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.nyp.microdelivery.posting;
+package com.nyp.microdelivery.bounty.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,8 +17,6 @@ import java.util.List;
  * @author Liu Woon Kit
  */
 
-//@Named("post")
-//@SessionScoped
 @Entity
 @Table(name="Posting")
 public class Bounty implements Serializable {
@@ -57,16 +55,16 @@ public class Bounty implements Serializable {
     private int deliveryPostalCd;
 
     @Column(name = "courier_id")
-    private String courierID;
+    private int courierID;
 
     @Column(name = "op_id")
-    private String opID;
+    private int opID;
 
     @Column(name = "confirmation_cd", length = 10, updatable = false)
     private String confirmationCd = java.util.UUID.randomUUID().toString().substring(0, 10);
 
     @Column(name = "status")
-    private String status;
+    private String status = "open";
 
     public Bounty() {
     }
@@ -151,19 +149,19 @@ public class Bounty implements Serializable {
         this.deliveryPostalCd = deliveryPostalCd;
     }
 
-    public String getCourierID() {
+    public int getCourierID() {
         return courierID;
     }
 
-    public void setCourierID(String courierID) {
+    public void setCourierID(int courierID) {
         this.courierID = courierID;
     }
 
-    public String getOpID() {
+    public int getOpID() {
         return opID;
     }
 
-    public void setOpID(String opID) {
+    public void setOpID(int opID) {
         this.opID = opID;
     }
 

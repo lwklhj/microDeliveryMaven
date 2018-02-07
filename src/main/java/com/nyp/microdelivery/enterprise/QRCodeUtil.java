@@ -36,15 +36,16 @@ public class QRCodeUtil {
                 }
 
             }
+            //logo part
 
 
-            int widthLogo = logo.getWidth(null) > bufferedImage.getWidth() * 2 / 10 ? (bufferedImage.getWidth() * 2 / 10) : logo.getWidth(null);
+            /*int widthLogo = logo.getWidth(null) > bufferedImage.getWidth() * 2 / 10 ? (bufferedImage.getWidth() * 2 / 10) : logo.getWidth(null);
             int heightLogo = logo.getHeight(null) > bufferedImage.getHeight() * 2 / 10 ? (bufferedImage.getHeight() * 2 / 10) : logo.getWidth(null);
 
             int x = (bufferedImage.getWidth() - widthLogo) / 2;
             int y = (bufferedImage.getHeight() - heightLogo) / 2;
 
-            gs.drawImage(logo,x,y,widthLogo,heightLogo,null);
+            gs.drawImage(logo,x,y,widthLogo,heightLogo,null);*/
 
             gs.dispose();
             bufferedImage.flush();

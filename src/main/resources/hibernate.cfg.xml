@@ -50,13 +50,15 @@ Contributor(s):
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">adminadmin</property>
     <!-- List of mapping classes -->
-    <mapping class="com.nyp.microdelivery.posting.Bounty"></mapping>
-    <mapping class="com.nyp.microdelivery.posting.entity.BountyMessage"></mapping>
+    <mapping class="com.nyp.microdelivery.bounty.entity.Bounty"></mapping>
+    <mapping class="com.nyp.microdelivery.bounty.entity.BountyMessage"></mapping>
     <mapping class="com.nyp.microdelivery.enterprise.Entity.Item"/>
     <mapping class="com.nyp.microdelivery.enterprise.Entity.Store"/>
     <mapping class="com.nyp.microdelivery.enterprise.Entity.Order"/>
     <mapping class="com.nyp.microdelivery.enterprise.Entity.OrderItem"/>
     <mapping class="com.nyp.microdelivery.enterprise.Entity.DeliveryAddress"/>
+    <mapping class="com.nyp.microdelivery.user.User"/>
+    <mapping class="com.nyp.microdelivery.admin.UserSearch"/>
 
   </session-factory>
 </hibernate-configuration>

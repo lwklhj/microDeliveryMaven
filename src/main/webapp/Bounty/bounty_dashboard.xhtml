@@ -3,16 +3,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xml:lang="en" lang="en">
     <h:head>
         <title>Bounty board</title>
+        <f:metadata>
+            <f:viewParam name="activetab" value="#{activetab}" converter="javax.faces.Integer"/>
+        </f:metadata>
     </h:head>
     <h:body>
         <ui:composition template="../WEB-INF/templates/masterLayout.xhtml">
             <ui:define name="content">
+                <b:form>
+                    <p:growl id="growl" showDetail="true"/>
+                    <p:poll interval="2" update="growl" listener="#{bountyPolling.checkBountyAccepted}"/>
+                </b:form>
+
                 <b:container>
-                    <b:tabView tabPosition="left" contentStyle="border-right: 1px solid #ddd;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding:10px">
+                    <b:tabView activeIndex="#{activetab}" tabPosition="left">
                         <b:tab title="Search for bounties">
                             <ui:include src="bounty_search.xhtml"/>
                         </b:tab>

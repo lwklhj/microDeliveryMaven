@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xml:lang="en" lang="en">
+
+<h:body>
+    <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+            <ui:define name="content">
+<b:container layout="fluid" style="padding-top:70px">
+    <h:form>
+            <b:row style="text-align:center">
+                <h2>Login as user</h2>
+            </b:row>
+            <b:row>
+
+                <b:column col-md="1" offset="4" styleClass="paddingTop">
+                    <h:outputText value="Username:" for="userName"/>
+                </b:column>
+                <b:column col-md="3">
+                    <b:inputText placeholder="Username" id="userName"
+                                 ajax="true" value="#{login.userName}" required="true" requiredMessage="Please enter username">
+                        <b:message for="userName"/>
+                        <f:facet name="prepend">
+                            <b:icon name="user"/>
+                        </f:facet>
+                    </b:inputText>
+                </b:column>
+            </b:row>
+
+        <b:row>
+            <b:column col-md="1" offset="4">
+                <h:outputText value="Password:"/>
+            </b:column>
+            <b:column col-md="3">
+                <b:inputSecret placeholder="Password" id="passWord"  ajax="true"  value="#{login.passWord}" required="true" requiredMessage="Please enter password">
+                    <b:message for="passWord"/>
+                    <f:facet name="prepend">
+                        <b:iconAwesome name="key"/>
+                    </f:facet>
+                </b:inputSecret>
+            </b:column>
+
+        </b:row>
+
+            <b:row>
+                <b:column span="4" offset="4">
+                    <b:commandButton value="Login"   look="primary" style="width:100%" action="#{login.login}"/>
+                </b:column>
+            </b:row>
+
+    </h:form>
+    <b:row style="text-align:center">
+        <h2>Login as Store</h2>
+    </b:row>
+
+    <h:form>
+        <b:row>
+            <b:column col-md="1" offset="4" styleClass="paddingTop">
+                <h:outputText value="Username:" for="storeName"/>
+            </b:column>
+            <b:column col-md="3">
+                <b:inputText placeholder="Username" id="storeName"
+                             ajax="true" value="#{login.storeName}" required="true" requiredMessage="Please enter email">
+                    <b:message for="storeName"/>
+                    <f:facet name="prepend">
+                        <b:icon name="user"/>
+                    </f:facet>
+                </b:inputText>
+            </b:column>
+        </b:row>
+
+        <b:row>
+            <b:column col-md="1" offset="4">
+                <h:outputText value="Password:"/>
+            </b:column>
+            <b:column col-md="3">
+                <b:inputSecret placeholder="Password" id="storepassWord"  ajax="true"  value="#{login.storePass}" required="true" requiredMessage="Please enter password">
+                    <b:message for="storepassWord"/>
+                    <f:facet name="prepend">
+                        <b:iconAwesome name="key"/>
+                    </f:facet>
+                </b:inputSecret>
+            </b:column>
+
+        </b:row>
+
+        <b:row>
+            <b:column span="4" offset="4">
+                <b:commandButton value="Login"   look="primary" style="width:100%" action="#{login.storeLogin}"/>
+            </b:column>
+        </b:row>
+
+    </h:form>
+</b:container>
+            </ui:define>
+    </ui:composition>
+</h:body>
+</html>

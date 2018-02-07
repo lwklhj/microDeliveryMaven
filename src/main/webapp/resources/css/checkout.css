@@ -7,3 +7,6 @@
 #datalist_list{
     padding-left: 0px;
 }
+.butActive :active{
+    background: #fcfcfc;
+}

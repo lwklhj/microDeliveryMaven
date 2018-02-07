@@ -1,6 +1,5 @@
 package com.nyp.microdelivery.enterprise.Entity;
 
-
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.Column;
@@ -61,6 +60,7 @@ public class Store implements Serializable{
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+
     }
 
     public String getAddr() {
@@ -108,6 +108,7 @@ public class Store implements Serializable{
     }
 
     public void setPicture(byte[] picture) {
+
         this.picture = picture;
     }
 

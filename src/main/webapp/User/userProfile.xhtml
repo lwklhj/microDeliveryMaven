@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+>
+
+    <h:body>
+        <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+        <ui:define name="content">
+            <f:metadata>
+                <f:event type="preRenderView" listener="#{userProfile.loadUser}"/>
+            </f:metadata>
+        <b:container style="padding-top:70px">
+        <h:form>
+
+        <b:row>
+            <b:column colMd="3" offset="2">
+                <h:outputText value="UserName: "></h:outputText>
+            </b:column>
+            <b:column colMd="4" offset="1">
+                <b:inputText value="#{userProfile.user.userName}"></b:inputText>
+            </b:column>
+        </b:row>
+        <b:row>
+            <b:column colMd="3" offset="2">
+                <h:outputText value="Email: "></h:outputText>
+            </b:column>
+            <b:column colMd="4" offset="1">
+                <b:inputText value="#{userProfile.user.email}"></b:inputText>
+            </b:column>
+        </b:row>
+        <b:row>
+            <b:column colMd="3" offset="2">
+                <h:outputText value="Address: "></h:outputText>
+            </b:column>
+            <b:column colMd="4" offset="1">
+                <b:inputText value="#{userProfile.user.addr}"></b:inputText>
+            </b:column>
+        </b:row>
+        <b:row>
+            <b:column colMd="3" offset="2">
+                <h:outputText value="Phone Number: "></h:outputText>
+            </b:column>
+            <b:column colMd="4" offset="1">
+                <b:inputText value="#{userProfile.user.phoneNo}"></b:inputText>
+            </b:column>
+        </b:row>
+        <b:row>
+            <b:column colMd="3" offset="2">
+                <h:outputText value="Password: "></h:outputText>
+            </b:column>
+            <b:column colMd="4" offset="1">
+                <b:inputText value="#{userProfile.user.password}"></b:inputText>
+            </b:column>
+        </b:row>
+
+                <b:row>
+                    <b:column span="5" offset="4">
+                        <b:commandButton value="Update" action="#{userProfile.updateUser}" look="primary" style="width:100%" />
+                    </b:column>
+                </b:row>
+
+
+    <br></br>
+        </h:form>
+            <h:form>
+                <b:row>
+                    <b:column colMd="4" offset="4">
+                        <b:inputText value="#{userProfile.receName}" >
+                            <f:facet name="prepend">
+                                <h:outputText value="Recipient name" />
+                            </f:facet>
+                        </b:inputText>
+                        <b:inputText value="#{userProfile.addr}">
+                            <f:facet name="prepend">
+                                <h:outputText value="Address" />
+                            </f:facet>
+                        </b:inputText>
+                        <b:inputText   value="#{userProfile.postalCode}">
+                            <f:facet name="prepend">
+                                <h:outputText value="Postal code" />
+                            </f:facet>
+                        </b:inputText>
+                        <b:commandButton update="addresses" value="Add address" action="#{userProfile.addAddress}" style="float:right"/>
+                    </b:column>
+                </b:row>
+
+            </h:form>
+            <h2>
+                Address
+            </h2>
+
+            <p:dataGrid var="address" value="#{userProfile.addressList}" columns="8" layout="grid" rendered="#{userProfile.addressList.size()!=0}"
+                        rows="4"
+                        style="text-align: right"
+            id="addresses">
+                <b:commandButton  type="button" styleClass="butActive" style="padding:20px;width:144px;height:107px;">
+
+                    <b:row><h:outputText value="#{address.receiveName}"/></b:row>
+                    <b:row><h:outputText value="#{address.addr}"/></b:row>
+                    <b:row><h:outputText value="S(#{address.postalCode})"/></b:row>
+
+                </b:commandButton>
+            </p:dataGrid>
+        </b:container>
+        </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

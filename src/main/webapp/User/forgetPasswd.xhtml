@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<h:body>
+    <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+    <ui:define name="content">
+
+        <b:container style="padding-top:70px">
+            <h:form>
+                <b:column col-md="6" offset="4">
+            <h:outputText value="Please enter your email"/>
+                </b:column>
+                <b:column col-md="6" offset="4">
+            <b:inputText placeholder="Email" id="email"  ajax="true" autocomplete="false" required="true"/>
+                </b:column>
+                <b:column span="2" offset="4">
+            <b:commandButton value="send email" look="primary" style="width:100%"/>
+                </b:column>
+            </h:form>
+        </b:container>
+
+    </ui:define>
+    </ui:composition>
+</h:body>
+</html>

@@ -8,12 +8,24 @@
 
 <h:body>
     <ui:composition>
-        <b:navBar brand="Micro Delivery" brandHref="microDelivery-1.0/index.xhtml" inverse="true" fixed="top" style="margin-bottom:20px">
+        <b:navBar class="navbar navbar-default"/>
+        <b:navBar brand="Micro Delivery" brandHref="/microDelivery-1.0/index.xhtml" inverse="true" fixed="top" style="margin-bottom:20px">
             <h:form styleClass="navbar-form navbar-right">
-                <b:commandButton action="a" value="Login" look="success" icon="chevron-right" iconAlign="right"/>
+                <b:commandButton rendered="#{login.user.userName==null}" action="/User/login" value="Login" look="success" icon="chevron-right" iconAlign="right"/>
                 #{"     "}
 
-                <b:commandButton action="a" value="Register" look="success" icon="chevron-right" iconAlign="right"/>
+                <b:commandButton rendered="#{login.user.userName!=null }" action="/User/userProfile" value="User Profile" look="success" icon="chevron-right" iconAlign="right"/>
+                #{"     "}
+
+                <b:dropButton rendered="#{login.user.userName==null}" look="primary" value="Register">
+                    <b:navLink value="Normal User" href="#{request.contextPath}/User/createAccount.xhtml" ></b:navLink>
+                    <b:navLink value="Open Store" href="#{request.contextPath}/User/openStore.xhtml"></b:navLink>
+                </b:dropButton>
+
+                <!--b:commandButton action="/user/createAccount" value="Register" look="success" icon="chevron-right" iconAlign="right"/>-->
+                #{"     "}
+
+                <b:commandButton rendered="#{login.user.userName!=null ||login.store!=null}" action="#{login.logout}" value="Logout" look="success" icon="chevron-right" iconAlign="right"/>
             </h:form>
         </b:navBar>
 

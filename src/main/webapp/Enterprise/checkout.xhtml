@@ -15,10 +15,30 @@
 <h:body>
     <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
         <ui:define name="content">
+            <f:metadata>
+                <f:event type="preRenderView" listener="#{checkOut.load}"/>
+
+            </f:metadata>
             <h:outputStylesheet library="css" name="uutil.css"  />
             <h:outputStylesheet library="css" name="checkout.css"  />
             <b:container styleClass="padHeader">
+
+                <h4>Delivery address</h4>
+                <p:dataGrid var="address" value="#{checkOut.addresses}" columns="8" layout="grid" rendered="#{checkOut.addresses.size()!=0}"
+                            rows="4"
+                            style="text-align: right">
+                    <h:form><b:commandButton  actionListener="#{checkOut.changeAddress(address)}" styleClass="butActive" style="padding:20px;width:144px;height:107px;">
+
+                        <b:row><h:outputText value="#{address.receiveName}"/></b:row>
+                        <b:row><h:outputText value="#{address.addr}"/></b:row>
+                        <b:row><h:outputText value="S(#{address.postalCode})"/></b:row>
+
+                    </b:commandButton></h:form>
+
+                </p:dataGrid>
+                <br/>
                 <hr/>
+
                 <b:row>
                     <b:column>
                                 <b:column colMd="10">
@@ -58,10 +78,18 @@
 
                     </b:column>
                 </b:row>
+                <b:row style="padding-top:20px;padding-bottom:20px">
+                    <b:column colMd="2" offset="10">
+                        <h:outputText value="Total: " style="font-weight: bolder"/>
+                        <h:outputText value="#{checkOut.storeDetail.totalPrice}"/>
+
+                    </b:column>
+
+                </b:row>
                 <b:row>
-                    <b:column colMd="1" offset="11">
+                    <b:column colMd="2" offset="10">
                         <h:form>
-                            <b:commandButton  action="#{checkOut.checkOut}" value="Check out">
+                            <b:commandButton  action="#{checkOut.checkOut}" value="Check out" >
                                 <f:param name="orderId" value="#{checkOut.orderId}" />
                             </b:commandButton>
                         </h:form>

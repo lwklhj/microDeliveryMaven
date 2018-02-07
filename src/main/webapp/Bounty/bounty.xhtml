@@ -15,77 +15,85 @@
             </f:metadata>
 
             <ui:define name="content">
-                <b:message for="idParam"/>
-                <b:container>
+                <b:container id="contentPanel">
+                    <b:container>
+                        <b:button value="Back" outcome="bounty_dashboard"/>
+                    </b:container>
                     <b:panelGrid colSpans="6,6">
-                        <h:panelGroup>
-                            <p:galleria rendered="#{not empty viewPost.post.images}" value="#{viewPost.post.images}" var="image" panelWidth="500" panelHeight="313" style="width: 100%;">
+                        <b:panelGrid columns="1" span="12">
+                            <p:galleria rendered="#{not empty viewPost.post.images}" value="#{viewPost.post.images}" var="image" panelWidth="500" panelHeight="313">
                                 <o:graphicImage style="object-fit: contain; width: 100%; height: 100%" id="image_post" value="#{image}" dataURI="true"/>
                             </p:galleria>
-                            <o:graphicImage rendered="#{empty viewPost.post.images}"
-                                            style="object-fit: cover; width: 180px; height: 180px;"
-                                            name="images/alt-image.jpg"
-                                            dataURI="true"/>
-                        </h:panelGroup>
+                            <b:panel rendered="#{empty viewPost.post.images}">
+                                <o:graphicImage
+                                                style="object-fit: cover; width: 500px; height: 313px;"
+                                                name="images/alt-image.jpg"
+                                                dataURI="true"/>
+                            </b:panel>
+                        </b:panelGrid>
                         <b:panel>
                             <b:panelGrid columns="1" span="12">
-                                <h3>Item(s) delivery request by Hefei</h3>
+                                <h3>Item(s) delivery request by #{userProfile.getUsernameFromID(viewPost.post.opID)}</h3>
 
 
-                                <h:outputText value="Title: #{viewPost.post.title}"/>
+                                <b:iconAwesome name="comment">Wants: #{viewPost.post.title}</b:iconAwesome>
 
                                 <h:panelGroup>
                                     <b:iconAwesome name="tag"/>
+                                    <h:outputText value="Bounty payout: "/>
                                     <h:outputText value="#{viewPost.post.price}">
                                         <f:convertNumber type="currency" currencySymbol="S$" locale="en_SG" />
                                     </h:outputText>
                                 </h:panelGroup>
 
-                                <b:iconAwesome name="clock-o">#{of:formatDate(viewPost.post.dateTime, 'dd/MM/yyyy hh:mm a')}</b:iconAwesome>
+                                <b:iconAwesome name="clock-o">Wants it by: #{of:formatDate(viewPost.post.dateTime, 'dd/MM/yyyy hh:mm a')}</b:iconAwesome>
 
-                                <h:panelGroup>
-                                    <h:outputText value="Wants it by:"/>
-                                    <b:iconAwesome name="clock-o"/>
-                                    <h:outputText value="#{of:formatDate(viewPost.post.dateTime, 'dd/MM/yyyy hh:mm a')}" />
-                                </h:panelGroup>
+                                <!--<h:panelGroup>-->
+                                    <!--<b:iconAwesome name="clock-o"/>-->
+                                    <!--<h:outputText value="Wants it by:"/>-->
+                                    <!--<h:outputText value="#{of:formatDate(viewPost.post.dateTime, 'dd/MM/yyyy hh:mm a')}" />-->
+                                <!--</h:panelGroup>-->
 
                                 <b:iconAwesome name="info-circle">Additional information : #{viewPost.post.description}</b:iconAwesome>
 
-                                <h:outputText value="Status : #{viewPost.post.status}"/>
+                                <b:iconAwesome name="codepen">Status : #{viewPost.post.status}</b:iconAwesome>
 
                                 <b:iconAwesome name="location-arrow">Delivery Address: #{viewPost.post.deliveryAddr}</b:iconAwesome>
 
-                                <h:form enctype="multipart/form-data">
+                                <o:form includeViewParams="true" enctype="multipart/form-data">
+                                    <p:growl id="messages" showDetail="true" />
                                     <b:panelGrid columns="1">
                                         <b:commandButton rendered="#{(viewPost.checkIsCourier() || viewPost.checkIsOp()) == false}" value="Accept" actionListener="#{viewPost.accept()}"/>
 
                                         <b:column rendered="#{viewPost.checkIsCourier()}">
                                             <b:column colMd="4" rendered="#{viewPost.post.status ne 'completed'}">
-                                                <p:growl id="messages" showDetail="true" />
                                                 <h:outputText value="Delivery confirmation code"/>
-                                                <p:fileUpload mode="advanced" fileUploadListener="#{viewPost.decodeQRCode}" auto="true"/>
-                                                <!--<b:inputText label="Delivery confirmation code" required="true" value="#{confirmationCdInput}"/>-->
-                                                <!--<b:message for="@previous"/>-->
-                                                <!--<b:commandButton look="primary" value="Submit" action="#{viewPost.cashIn(confirmationCdInput)}"/>-->
+                                                <p:fileUpload mode="advanced" fileUploadListener="#{viewPost.decodeQRCode}" auto="true" update="contentPanel"/>
                                             </b:column>
                                         </b:column>
 
                                         <b:column rendered="#{viewPost.checkIsOp()}">
+                                            <h:outputText value="Confirmation QR code:"/>
                                             <p:barcode value="#{viewPost.post.confirmationCd}" type="qr"/>
-                                            <h:outputText value="#{viewPost.post.confirmationCd}"/>
-                                            <b:button look="primary" value="Edit" outcome="bounty_create">
-                                                <f:param name="id" value="#{viewPost.post.id}"/>
-                                            </b:button>
+                                            <!--<h:outputText value="#{viewPost.post.confirmationCd}"/>-->
+                                            <b:row>
+                                                <h:outputText value="Being delivered by: #{userProfile.getUsernameFromID(viewPost.post.courierID)}" rendered="#{viewPost.post.courierID > 0}"/>
+                                                <b:commandButton style="float: right;" immediate="true" value="Reject courier" look="danger" actionListener="#{viewPost.rejectCourier}" rendered="#{viewPost.post.courierID > 0 and viewPost.post.status ne 'completed'}"/>
+                                                <b:button style="float: right;" look="primary" value="Edit" outcome="bounty_create">
+                                                    <f:param name="id" value="#{viewPost.post.id}"/>
+                                                </b:button>
+                                            </b:row>
+
                                         </b:column>
                                     </b:panelGrid>
-                                </h:form>
+                                </o:form>
                             </b:panelGrid>
                         </b:panel>
 
                         <b:panel rendered="#{(viewPost.checkIsCourier() || viewPost.checkIsOp()) == true}">
-                        <h:outputText value="Bounty Comments"/>
-                            <b:form>
-                                <h:panelGroup id="z">
+                            <h:outputText value="Bounty Comments"/>
+                            <h:panelGroup id="commentsComponent">
+                                <p:scrollPanel style="height: 340px">
                                     <ui:repeat value="#{messageController.getMessages(viewPost.post.id)}" var="m">
                                         <h:panelGroup>
                                             <b:column span="12">
@@ -100,25 +108,28 @@
                                                 <b:row>#{m.text}</b:row>
                                             </b:column>
                                         </h:panelGroup>
-
                                     </ui:repeat>
-                                </h:panelGroup>
-                                <p:poll interval="10" update="z"/>
-                                <!--<b:inputText value="#{inputValue}"/>-->
-                                <!--<b:commandButton immediate="true" value="Post a new comment" process="@this" update="@form" actionListener="#{messageController.insertMessage(inputValue,viewPost.post.id)}"/>-->
-                                <b:inputText value="inputValue"/>
-                                #{inputValue}
-                                <b:commandButton process="@form" update="@form" value="Post a new comment" actionListener="#{messageController.insertMessage('test', viewPost.post.id)}"/>
+                                </p:scrollPanel>
+
+                            </h:panelGroup>
+                            <b:form>
+                                <p:poll interval="2" update="commentsComponent"/>
+                                <b:inputText immediate="true">
+                                    <f:ajax event="change" listener="#{messageController.onChangeText}"/>
+                                </b:inputText>
+                                <b:commandButton immediate="true" value="Post a new comment" actionListener="#{messageController.insertMessage(viewPost.post.id)}">
+                                    <f:ajax process="@form" render="@none"/>
+                                </b:commandButton>
                             </b:form>
+
                         </b:panel>
 
-                        <b:panel span="12">
+                        <b:panel>
                             <b:panelGrid columns="1" span="12">
                                 <h:outputText value="Where to find this item(s)"/>
                                 <b:iconAwesome name="home">#{viewPost.post.storeName}</b:iconAwesome>
                                 <b:iconAwesome name="location-arrow">#{viewPost.post.storeLocation}</b:iconAwesome>
                             </b:panelGrid>
-
                         </b:panel>
 
                     </b:panelGrid>

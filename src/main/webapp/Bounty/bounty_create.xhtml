@@ -17,28 +17,32 @@
         </f:metadata>
         <ui:define name="content">
             <b:container>
+                <b:button value="Back" outcome="bounty_dashboard?activetab=1"/>
+            </b:container>
+            <b:container>
+                <o:massAttribute name="disabled" value="#{bountyCreate.bounty.courierID > 0}">
                 <b:form>
                     <h2>Bounty creation</h2>
                     <p:wizard>
                         <p:tab title="Request information">
-                            <b:inputText label="Name of your item(s)" value="#{bountyCreate.bounty.title}" required="true" requiredMessage="Enter your item(s) request"/>
+                            <b:inputText label="What item(s) do you want to buy?" value="#{bountyCreate.bounty.title}" required="true" requiredMessage="Enter your item(s) request"/>
                             <b:message for="@previous"/>
 
-                            <p:outputLabel value="Upload image"/>
+                            <p:outputLabel value="How does the item(s) look like?"/>
                             <h:panelGroup id="panel">
                                 <h:panelGroup rendered="#{not empty bountyCreate.bounty.images}">
                                     <h:outputText value="Image preview"/><br/>
                                     <p:galleria value="#{bountyCreate.bounty.images}" var="image" panelWidth="500" panelHeight="313">
                                         <o:graphicImage style="object-fit: contain; width: 100%; height: 100%" id="image_post" value="#{image}" dataURI="true"/>
-                                        <b:commandButton update="panel" iconAwesome="trash" look="danger" style="position:absolute; top:0; right:0; z-index:10;"/>
+                                        <b:commandButton type="button" actionListener="#{bountyCreate.removeImage(image)}" update="panel" iconAwesome="trash" look="danger" style="position:absolute; top:0; right:0; z-index:10;"/>
                                     </p:galleria>
                                 </h:panelGroup>
                             </h:panelGroup>
                             <p:fileUpload mode="advanced" fileUploadListener="#{bountyCreate.uploadImage}" auto="true" update="panel"/>
 
-                            <b:inputTextarea label="More info about your item(s)" value="#{bountyCreate.bounty.description}" rows="6" cols="33" style="resize: none" styleClass="unresizable"/>
+                            <b:inputTextarea label="More info about your item(s)/Say more about your item(s)" value="#{bountyCreate.bounty.description}" rows="6" cols="33" style="resize: none" styleClass="unresizable"/>
 
-                            <b:inputText label="Total price of item(s)" value="#{bountyCreate.bounty.price}" required="true" requiredMessage="Enter your item(s) price">
+                            <b:inputText label="How much does the item(s) cost?" value="#{bountyCreate.bounty.price}" required="true" requiredMessage="Enter your item(s) price">
                                 <p:keyFilter mask="num"/>
                                 <f:convertNumber pattern="#0.00"/>
                                 <f:facet name="prepend">
@@ -49,11 +53,11 @@
 
                             <b:row>
                                 <b:column>
-                                    <b:inputText required="true" label="What shop/store is this from?" value="#{bountyCreate.bounty.storeName}"/>
+                                    <b:inputText required="true" label="What is the name of the store?" value="#{bountyCreate.bounty.storeName}"/>
                                     <b:message for="@previous"/>
                                 </b:column>
                                 <b:column>
-                                    <b:inputText required="true" label="Location of store/shop" value="#{bountyCreate.bounty.storeLocation}"/>
+                                    <b:inputText required="true" label="Where is the store?" value="#{bountyCreate.bounty.storeLocation}"/>
                                     <b:message for="@previous"/>
                                 </b:column>
                             </b:row>
@@ -63,11 +67,11 @@
 
 
                         <p:tab title="Address">
-                            <b:dateTimePicker required="true" requiredMessage="When do you want this to be delivered?" iconPosition="left" side-by-side="true" label="Time" value="#{bountyCreate.bounty.dateTime}" showDate="true" showTime="true" minDate="#{of:formatDate(now, 'MM/dd/yyyy HH:mm')}"/>
+                            <b:dateTimePicker required="true" requiredMessage="Pick a date and time" iconPosition="left" side-by-side="true" label="When do you want it?" value="#{bountyCreate.bounty.dateTime}" showDate="true" showTime="true" minDate="#{of:formatDate(now, 'MM/dd/yyyy HH:mm')}"/>
                             <b:message for="@previous"/>
-                            <b:inputText required="true" label="Your address" value="#{bountyCreate.bounty.deliveryAddr}"/>
+                            <b:inputText required="true" label="Where do you want it to be delivered?" value="#{bountyCreate.bounty.deliveryAddr}"/>
                             <b:message for="@previous"/>
-                            <b:inputText required="true" label="Postal Code" value="#{bountyCreate.bounty.deliveryPostalCd}">
+                            <b:inputText required="true" label="What is the postal code of the location/address?" value="#{bountyCreate.bounty.deliveryPostalCd}">
                                 <p:keyFilter mask="num"/>
                                 <f:validateLength minimum="6" maximum="6"/>
                             </b:inputText>
@@ -75,12 +79,13 @@
                             <b:commandButton style="float:right;" look="primary" value="Submit" action="#{bountyCreate.saveOrUpdate()}">
                                 <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
                             </b:commandButton>
-                            <b:commandButton look="danger" value="Delete" rendered="#{bountyCreate.bounty.id > 0}" action="#{bountyCreate.deleteBounty}">
+                            <b:commandButton style="float:right;" look="danger" value="Delete" action="#{bountyCreate.deleteBounty}" rendered="#{bountyCreate.bounty.id > 0}">
                                 <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
                             </b:commandButton>
                         </p:tab>
                     </p:wizard>
                 </b:form>
+                </o:massAttribute>
             </b:container>
 
             <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>

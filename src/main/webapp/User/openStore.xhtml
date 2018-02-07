@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:b="http://bootsfaces.net/ui"
+      xmlns:o="http://omnifaces.org/ui">
+<h:body>
+    <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+    <ui:define name="content">
+    <b:container layout="fluid" style="padding-top:70px">
+        <b:row>
+        <b:column colMd="8" offset="2">
+        <h:form>
+        <b:row>
+            <b:column col-md="2" offset="4">
+                <h:outputText value="Store" for="storeName"/>
+            </b:column>
+            <b:column col-md="3">
+                <b:inputText placeholder="Store name" id="storeName"  ajax="true" autocomplete="false" required="true" requiredMessage="This username is required" value="#{createAcct.store.companyName}">
+                </b:inputText>
+                <b:message for="storeName" />
+            </b:column>
+
+            <b:column col-md="2" offset="4">
+                <h:outputText value="Email" for="semail"/>
+            </b:column>
+            <b:column col-md="3">
+                <b:inputText placeholder="Email" id="semail"   mask="email" ajax="true" autocomplete="false" required="true" requiredMessage="This email is required" value="#{createAcct.store.email}">
+                </b:inputText>
+                <b:message for="@previous" />
+            </b:column>
+        </b:row>
+        <b:row>
+            <b:column col-md="2" offset="4">
+                <h:outputText value="Address" for="saddr"/>
+            </b:column>
+            <b:column col-md="5">
+                <b:inputText placeholder="Address" id="saddr"  ajax="true" autocomplete="false" required="true" requiredMessage="This address is required" value="#{createAcct.store.addr}">
+                </b:inputText>
+                <b:message for="@previous" />
+            </b:column>
+        </b:row>
+        <b:row>
+            <b:column col-md="2" offset="4">
+                <h:outputText value="Phone" for="sphone"/>
+            </b:column>
+            <b:column col-md="3">
+                <b:inputText placeholder="Phone Number" id="sphone" ajax="true" validatorMessage="Please enter correct phone number" maxlength="8" autocomplete="false" required="true" requiredMessage="This phone is required" value="#{createAcct.store.phoneNo}">
+                    <f:validateRegex pattern="^[0-9]{8}$"/>
+                </b:inputText>
+                <b:message for="@previous" />
+            </b:column>
+        </b:row>
+            <b:row>
+                <b:column col-md="2" offset="4">
+                    <h:outputText value="Postal" for="postal"/>
+                </b:column>
+                <b:column col-md="3">
+                    <b:inputText placeholder="Postal code" id="postal" ajax="true" validatorMessage="Please enter correct postal code" maxlength="6" autocomplete="false" required="true" requiredMessage="This postal code is required" value="#{createAcct.store.postalCode}">
+                        <f:validateRegex pattern="^[0-9]{6}$"/>
+                    </b:inputText>
+                    <b:message for="@previous" />
+                </b:column>
+            </b:row>
+        <b:row>
+            <b:column col-md="2" offset="4">
+                <h:outputText value="Password" for="spassWord"/>
+            </b:column>
+            <b:column col-md="3">
+                <b:inputSecret placeholder="Password" id="spassWord" required="true" requiredMessage="Please enter password"  validatorMessage="required 6 to 20 characters,must contain one uppercase,one lower case">
+                    <f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})"/>
+                </b:inputSecret>
+                <b:message for="spassWord"/>
+            </b:column>
+        </b:row>
+
+        <b:row>
+            <b:column col-md="2" offset="4">
+                <h:outputText value="Comfirm Password" for="sCompasswd"/>
+            </b:column>
+            <b:column col-md="3">
+                <b:inputSecret placeholder="Confirm Password" id="sCompasswd" required="true"  value="#{createAcct.store.passwd}" requiredMessage="Please confirm password"/>
+                <b:message for="sCompasswd"/>
+                <o:validateEqual id="equal" components="spassWord sCompasswd" message="Password are not equal" showMessageFor="spassWord"/>
+            </b:column>
+        </b:row>
+        <b:row>
+            <b:column col-md="2" offset="4">
+                <h:outputText value="Type" />
+            </b:column>
+
+            <b:column col-md="3">
+                <b:selectOneMenu value="#{store.storeType}" required="true" requiredMessage="Please select store type">
+                    <f:selectItem itemLabel="Food" itemValue="food"></f:selectItem>
+                    <f:selectItem itemLabel="Beverage" itemValue="beverage"></f:selectItem>
+                    <f:selectItem itemLabel="Electronic" itemValue="electronic"></f:selectItem>
+                    <f:selectItem itemLabel="Grocery" itemValue="grocery"></f:selectItem>
+                    <f:selectItem itemLabel="Book" itemValue="book"></f:selectItem>
+                    <f:selectItem itemLabel="Stationary" itemValue="stationary"></f:selectItem>
+                    <f:selectItem itemLabel="Game" itemValue="game"></f:selectItem>
+                    <f:selectItem itemLabel="Medicine" itemValue="medicine"></f:selectItem>
+                </b:selectOneMenu>
+            </b:column>
+        </b:row>
+        <b:row>
+            <b:column span="4" offset="5">
+                <b:commandButton value="Register"  look="primary" style="width:100%" action="#{createAcct.registerStore}"/>
+            </b:column>
+        </b:row>
+    </h:form>
+        </b:column>
+        </b:row>
+    </b:container>
+    </ui:define>
+    </ui:composition>
+</h:body>
+</html>

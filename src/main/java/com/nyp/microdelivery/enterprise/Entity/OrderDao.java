@@ -48,6 +48,7 @@ public class OrderDao {
 
 
     }
+
     private static OrderItem convertCartItemToOrderItem(CartItem cartItem,int orderId){
         OrderItem orderItem=new OrderItem();
         orderItem.setItemId(cartItem.getItem().getId());
@@ -103,6 +104,13 @@ public class OrderDao {
         session.close();
         return (DeliveryAddress) result;
     }
+    public static void saveSDeliveryAddress(DeliveryAddress addresse){
+        Session session=sessionFactory.openSession();
+        session.beginTransaction();
+        session.saveOrUpdate(addresse);
+        session.getTransaction().commit();
+        session.close();
+    }
     public static void completeOrder(Order order){
         Session session=sessionFactory.openSession();
         Transaction traction=session.beginTransaction();
@@ -110,6 +118,21 @@ public class OrderDao {
         session.update(order);
         traction.commit();
         session.close();
+
+    }
+
+
+
+    public static List<DeliveryAddress> getDeliveryAddress(int userId){
+        Session session=sessionFactory.openSession();
+        session.beginTransaction();
+        String query="select * from deliveryAddress where userId="+userId;
+
+        List<DeliveryAddress> list = session.createNativeQuery(query).addEntity(DeliveryAddress.class).list();
+
+
+        session.close();
+        return list;
 
     }
 

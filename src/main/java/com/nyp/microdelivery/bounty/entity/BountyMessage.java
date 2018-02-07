@@ -1,4 +1,4 @@
-package com.nyp.microdelivery.posting.entity;
+package com.nyp.microdelivery.bounty.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +7,10 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ *
+ * @author Liu Woon Kit
+ */
 @Entity
 @Table(name="bounty_messages")
 public class BountyMessage implements Serializable {
@@ -15,7 +19,7 @@ public class BountyMessage implements Serializable {
 
     @Id
     @Column
-    private String personID;
+    private int personID;
 
     @Id
     @Column
@@ -27,7 +31,7 @@ public class BountyMessage implements Serializable {
     public BountyMessage() {
     }
 
-    public BountyMessage(int bountyID, String personID, Date date, String text) {
+    public BountyMessage(int bountyID, int personID, Date date, String text) {
         this.bountyID = bountyID;
         this.personID = personID;
         this.date = date;
@@ -42,11 +46,11 @@ public class BountyMessage implements Serializable {
         this.bountyID = bountyID;
     }
 
-    public String getPersonID() {
+    public int getPersonID() {
         return personID;
     }
 
-    public void setPersonID(String personID) {
+    public void setPersonID(int personID) {
         this.personID = personID;
     }
 

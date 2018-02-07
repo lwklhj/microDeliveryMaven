@@ -43,7 +43,7 @@ public class StoreDetail implements Serializable{
 
         if(storeId!=null){
             id=Integer.parseInt(storeId);
-            storeItems = StoreDao.getAllItem(id);
+            storeItems =StoreDao.getAllItem(id);
             store=StoreDao.getStoreInfo(id);
         }
 
@@ -82,7 +82,10 @@ public class StoreDetail implements Serializable{
     }
 
     public String checkOut(){
-        return "checkout";
+        System.out.println(cart.getOrderItems().size()+"size");
+        if(cart.getOrderItems().isEmpty());
+        else return "checkout";
+        return null;
     }
 
     public int getId() {
@@ -108,7 +111,6 @@ public class StoreDetail implements Serializable{
         String id = params.get("storeId");
         uri+="?storeId="+id;
         QRCodeUtil qr=new QRCodeUtil();
-        System.out.print("hefei  "+ uri);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         InputStream iStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/mainIcon.png");
 

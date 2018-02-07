@@ -87,12 +87,34 @@ public class StoreDao {
         session.beginTransaction();
         Criteria criteria = session.createCriteria(Store.class).add(Restrictions.eq("id",id));
         Object result = criteria.uniqueResult();
-
         session.close();
 
         return (Store) result;
 
     }
+    public static void saveStore(Store store){
+        Session session=sessionFactory.openSession();
+        session.beginTransaction();
+        session.saveOrUpdate(store);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+
+    public static Store storeLogging(String email,String passwd){
+        Session session = sessionFactory.openSession();
+        String query = "select * from store where email='" + email + "' and passwd='" + passwd + "'";
+        System.out.print(query);
+        Transaction transaction = session.beginTransaction();
+        Object obj = session.createNativeQuery(query).addEntity(Store.class).uniqueResult();
+        session.close();
+        return (Store) obj;
+
+
+
+
+    }
+
 
 
 

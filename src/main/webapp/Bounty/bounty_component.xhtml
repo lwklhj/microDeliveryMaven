@@ -14,7 +14,7 @@
             <f:param name="id" value="#{p.id}"/>
             <b:thumbnail>
                 <o:graphicImage rendered="#{not empty p.images}"
-                                style="object-fit: cover; width: 100%; height: 100%"
+                                style="object-fit: contain; width: 100%; height: 180px"
                                 value="#{p.getImages().get(0)}"
                                 dataURI="true"/>
                 <o:graphicImage rendered="#{empty p.images}"

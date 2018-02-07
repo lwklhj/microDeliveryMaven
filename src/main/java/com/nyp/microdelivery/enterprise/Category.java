@@ -1,6 +1,5 @@
 package com.nyp.microdelivery.enterprise;
 
-
 import com.nyp.microdelivery.enterprise.Entity.Item;
 
 import javax.enterprise.context.SessionScoped;

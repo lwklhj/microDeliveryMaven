@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+<h:head>
+    <title>Micro Delivery Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</h:head>
+
+<h:body>
+    <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+        <ui:define name="content">
+            <!--<f:metadata>
+                <f:event type="preRenderView" listener="#{userController.loadEnabledUsers()}" />
+            </f:metadata>-->
+            <h:outputStylesheet library="css" name="admin.css"/>
+            <!-- datatable -->
+            <b:container>
+                <h:panelGroup id="userDiv">
+                    <h:form id="testForm">
+
+                        <p:panel style="border-style: none;border: none">
+                            <h2><h:outputLabel style="font-size: 20px;margin: 0 auto">Users:</h:outputLabel></h2>
+
+                            <p:dataTable id="userTable"
+                                         value="#{userController.userList}"
+                                         var="tempUser"
+                                         widgetVar="tableSearch"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         rows="10"
+                                         selectionMode="single"
+                                         selection="#{userController.selectedUser}"
+                                         rowKey="#{tempUser.username}"
+                                         filteredValue="#{userController.filteredUser}"
+                            >
+                                <f:facet name="header">
+                                    <p:outputPanel>
+                                        <h:outputText value="Search user:"/>
+                                        <p:inputText id="globalFilter" onkeyup="PF('tableSearch').filter()" style="width:150px" placeholder="Any field"/>
+                                    </p:outputPanel>
+                                </f:facet>
+
+                                <p:ajax event="rowSelect" update="displayUserData" listener="#{userController.onRowSelect}"/>
+
+                                <p:column headerText="Username"
+                                          sortBy="#{tempUser.username}"
+                                          filterBy="#{tempUser.username}"
+                                          filterMatchMode="contains"
+                                          filterStyle="display: none">
+                                    <h:outputText value="#{tempUser.username}" />
+                                </p:column>
+
+                                <p:column headerText="Email"
+                                          sortBy="#{tempUser.email}"
+                                          filterBy="#{tempUser.email}"
+                                          filterMatchMode="contains"
+                                          filterStyle="display: none">
+                                    <h:outputText value="#{tempUser.email}" />
+                                </p:column>
+                                <p:column headerText="HP No"
+                                          sortBy="#{tempUser.phoneNo}"
+                                          filterBy="#{tempUser.phoneNo}"
+                                          filterMatchMode="contains"
+                                          filterStyle="display: none">
+                                    <h:outputText value="#{tempUser.phoneNo}" />
+                                </p:column>
+                                <p:column headerText="Address"
+                                          sortBy="#{tempUser.addr}"
+                                          filterBy="#{tempUser.addr}"
+                                          filterMatchMode="contains"
+                                          filterStyle="display: none"
+                                          style="display:none">
+                                    <h:outputText value="#{tempUser.addr}" />
+                                </p:column>
+                                <p:column id="disableColumn"
+                                          headerText="Disabled"
+                                          width="10%"
+                                          sortBy="#{tempUser.disable}"
+                                          filterStyle="display: none" >
+                                    <h:outputText value="#{tempUser.disable}" />
+                                </p:column>
+                            </p:dataTable>
+                            <br></br>
+                            <b:row style="text-align:center">
+                                <p:commandButton id="showBtn"
+                                                 value="Show All users"
+                                                 update="testForm:userTable displayUserData"
+                                                 actionListener="#{userController.loadAllUsers(2)}" style="margin: 10px"/>
+                                <p:commandButton id="showBtn1"
+                                                 value="Show disabled users only "
+                                                 update="testForm:userTable displayUserData"
+                                                 actionListener="#{userController.loadAllUsers(1)}" style="margin: 10px"/>
+                                <p:commandButton id="showBtn2"
+                                                 value="Show enabled users only"
+                                                 update="testForm:userTable displayUserData"
+                                                 actionListener="#{userController.loadAllUsers(0)}" style="margin: 10px"/>
+                            </b:row>
+
+                        </p:panel>
+                        <hr/>
+                    </h:form>
+
+                    <!-- display data -->
+                    <h:form id="displayUserData">
+                        <p:growl id="growl" showDetail="true" sticky="false" life="2000"/>
+                        <p:panelGrid id="userData">
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel>Username:</h:outputLabel>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText value="#{userController.selectedUser.username}"
+                                                 required="true"
+                                                 size="25">
+                                    </p:inputText>
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel>Password:</h:outputLabel>
+                                </p:column>
+                                <p:column>
+                                    <p:password value="#{userController.selectedUser.password}" size="25"></p:password>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel>Email:</h:outputLabel>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText value="#{userController.selectedUser.email}"
+                                                 required="true"
+                                                 requiredMessage="Please enter your email address."
+                                                 validatorMessage="Invalid email format"
+                                                 size="35">
+                                        <f:validateRegex
+                                                pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                    </p:inputText>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel>Contact No:</h:outputLabel>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText value="#{userController.selectedUser.phoneNo}" size="15"></p:inputText>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel>Address:</h:outputLabel>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText value="#{userController.selectedUser.addr}" size="40"></p:inputText>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:commandButton value="Save"
+                                                     update="growl displayUserData testForm:userTable"
+                                                     actionListener="#{userController.saveUser}"/>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="Clear"
+                                                     id="clearBtn"
+                                                     update="displayUserData"
+                                                     process="@this"
+                                                     actionListener="#{userController.clearUser}"/>
+                                    <p:commandButton value="Disable"
+                                                     id="disableBtn"
+                                                     update="growl testForm:userTable"
+                                                     actionListener="#{userController.disableUser}"/>
+                                    <p:commandButton value="Enable"
+                                                     id="enableBtn"
+                                                     update="growl testForm:userTable"
+                                                     actionListener="#{userController.enableUser}" />
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </h:form>
+                </h:panelGroup>
+            </b:container>
+
+        </ui:define>
+    </ui:composition>
+
+</h:body>
+</html>

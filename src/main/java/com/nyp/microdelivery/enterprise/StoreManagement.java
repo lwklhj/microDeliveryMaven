@@ -1,15 +1,14 @@
 package com.nyp.microdelivery.enterprise;
 
-import com.nyp.microdelivery.enterprise.Entity.Item;
-import com.nyp.microdelivery.enterprise.Entity.Order;
-import com.nyp.microdelivery.enterprise.Entity.OrderDao;
-import com.nyp.microdelivery.enterprise.Entity.StoreDao;
+import com.nyp.microdelivery.enterprise.Entity.*;
+import com.nyp.microdelivery.user.Login;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,9 +17,14 @@ import java.util.List;
 @Named
 @SessionScoped
 public class StoreManagement implements Serializable{
-    private int storeId=1;
+    @Inject
+    private Login login;
+
     private List<Item> itemList;
     private Item selectItem;
+    private Store store;
+    private int storeId;
+    private Store saveStore;
 
     private List<Order> orders;
 
@@ -30,14 +34,16 @@ public class StoreManagement implements Serializable{
         return selectItem;
     }
 
+
     public void setSelectItem(Item selectItem) {
         this.selectItem = selectItem;
     }
     public void load(){
-        int storeId=1;
+        storeId=login.getStore().getId();
         //selectItem=new Item();
-        itemList= StoreDao.getAllItem(storeId);
-        List<Order> list= OrderDao.getAllUncompleteOrderByStore(storeId);
+        store =StoreDao.getStoreInfo(storeId);
+        itemList=StoreDao.getAllItem(storeId);
+        List<Order> list=OrderDao.getAllUncompleteOrderByStore(storeId);
         orders=list;
 
     }
@@ -64,13 +70,14 @@ public class StoreManagement implements Serializable{
         StoreDao.deleteItem(selectItem);
     }
     public void resetSelectItem(ActionEvent event){
+
         selectItem=new Item();
 
 
     }
     public String saveItem(){
 
-            selectItem.setStoreId(storeId);
+            selectItem.setStoreId(store.getId());
             StoreDao.save(selectItem);
         return null;
 
@@ -88,7 +95,6 @@ public class StoreManagement implements Serializable{
     }
     public void handleFileUpload(FileUploadEvent event) {
         UploadedFile file=event.getFile();
-        System.out.println("upload file name "+file.getFileName());
         try {
 
             selectItem.setPicture(IOUtils.toByteArray(file.getInputstream()));
@@ -96,6 +102,41 @@ public class StoreManagement implements Serializable{
             e.printStackTrace();
         }
     }
+    public void handleStoreImageUpload(FileUploadEvent event) {
+        UploadedFile file=event.getFile();
+        saveStore=new Store();
+
+        try {
+
+            saveStore.setPicture(IOUtils.toByteArray(file.getInputstream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
+    public String saveStore(){
+        Store newStore=new Store();
+        newStore.setId(store.getId());
+        newStore.setCompanyName(store.getCompanyName());
+        newStore.setAddr(store.getAddr());
+        newStore.setEmail(store.getEmail());
+        newStore.setPasswd(store.getPasswd());
+        newStore.setPhoneNo(store.getPhoneNo());
+        newStore.setPostalCode(store.getPostalCode());
+        newStore.setStoreType(store.getStoreType());
+        if(saveStore!=null) newStore.setPicture(saveStore.getPicture());
+        else if(store.getPicture()!=null) newStore.setPicture(store.getPicture());
+
+        StoreDao.saveStore(newStore);
+        return null;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
 }

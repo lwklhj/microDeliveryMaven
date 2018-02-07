@@ -4,21 +4,50 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:b="http://bootsfaces.net/ui"
->
-<h:head>
-
-</h:head>
+      xmlns:b="http://bootsfaces.net/ui">
+<h:head></h:head>
 <h:body>
     <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
         <ui:define name="content">
             <h:outputStylesheet library="css" name="uutil.css"  />
             <h:outputStylesheet library="css" name="checkout.css"  />
-            <b:container styleClass="padHeader">
-                <h1>THANK YOU FOR YOUR ORDER</h1>
-                <h:outputText value="You order number is"></h:outputText>
-                <h:outputText value="You delivery address is"/>
-                <b:commandButton value="return to main page" action="/index"/>
+            <b:container styleClass="padHeader" style="text-align:center">
+                <b:row >
+                    <h1>THANK YOU FOR YOUR ORDER</h1>
+
+                </b:row>
+                <b:row>
+                    <b:column colMd="2" offset="4">
+                        <h:outputText value="You order number is:"></h:outputText>
+
+
+                    </b:column>
+                    <b:column colMd="4" style="text-align:left">
+                        <h:outputText value="#{checkOut.orderId}" style="font-weight: bold"/>
+
+                    </b:column>
+                </b:row>
+                <br></br>
+                <b:row>
+                    <b:column colMd="2" offset="4">
+                        <h:outputText value="You order is delivery to: "/>
+                    </b:column>
+                    <b:column colMd="4" style="text-align:left">
+                        <b:row><h:outputText value="#{checkOut.addrForSuccess.receiveName}" /></b:row>
+                        <b:row><h:outputText value="#{checkOut.addrForSuccess.addr}" /></b:row>
+                        <b:row><h:outputText value="S(#{checkOut.addrForSuccess.postalCode})"/></b:row>
+                    </b:column>
+
+                </b:row>
+                <br></br>
+                <br/>
+                <b:row>
+                    <h:link outcome="/index.xhtml" value="Click here return to index page"/>
+                </b:row>
+
+
+
+
             </b:container>
         </ui:define>
     </ui:composition>

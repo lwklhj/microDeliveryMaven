@@ -39,7 +39,7 @@
                         </b:panel>
                         <p:sticky target="cateLink"/>
                     </b:column>-->
-                    <b:column colMd="10" styleClass="padHeader">
+                    <b:column colMd="12" styleClass="padHeader" style="text-align:center">
 
                         <b:panel id="foodPanel">
                             <h3 style="margin: 0 auto">FOOD</h3>
@@ -51,7 +51,7 @@
                                 <p:link outcome="storeDetail">
                                     <f:param name="storeId" value="#{item.id}" />
                                     <b:thumbnail styleClass="thumbNailCss">
-                                        <o:graphicImage value="#{item.picture}" rendered="#{item.picture !=null}" dataUri="true" style="width: 100px;height: 100px"/>
+                                        <o:graphicImage value="#{item.picture}" dataURI="true" rendered="#{item.picture != null}" style="height: 150px;width: 150"/>
                                         <f:facet name="caption">
                                             <h3><h:outputText value="#{item.companyName}" /></h3>
                                         </f:facet>
@@ -67,13 +67,18 @@
                                         rows="4" paginator="true"
                                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
                                         style="margine-top:20px">
-                                <h:panelGroup style="border: 1px solid black">
-                                    <h:graphicImage value="resources/images/icon/beer.png" style="width: 100px;height: 100px"/>
-                                    <h:outputText value="#{item.companyName}"/>
-                                </h:panelGroup>
+                                <p:link outcome="storeDetail">
+                                    <f:param name="storeId" value="#{item.id}" />
+                                    <b:thumbnail styleClass="thumbNailCss">
+                                        <o:graphicImage value="#{item.picture}" dataURI="true" rendered="#{item.picture != null}" style="height: 150px;width: 150"/>
+                                        <f:facet name="caption">
+                                            <h3><h:outputText value="#{item.companyName}" /></h3>
+                                        </f:facet>
+                                    </b:thumbnail>
+                                </p:link>
                             </p:dataGrid>
                         </b:panel>
-                        <hr></hr>
+
                         <b:panel id="beveragePanel">
                             <h3 style="margin: 0 auto">Beverage</h3>
                             <h:outputText value="No store available" rendered="#{stores.electronicList.size() ==0}"></h:outputText>
@@ -81,10 +86,15 @@
                                         rows="4" paginator="true"
                                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
                                         style="margine-top:20px">
-                                <h:panelGroup style="border: 1px solid black">
-                                    <o:graphicImage value="resources/images/icon/beer.png" dataUri="true" style="width: 100px;height: 100px"/>
-                                    <h:outputText value="#{item.companyName}"/>
-                                </h:panelGroup>
+                                <p:link outcome="storeDetail">
+                                    <f:param name="storeId" value="#{item.id}" />
+                                    <b:thumbnail styleClass="thumbNailCss">
+                                        <o:graphicImage value="#{item.picture}" dataURI="true" rendered="#{item.picture != null}" style="height: 150px;width: 150"/>
+                                        <f:facet name="caption">
+                                            <h3><h:outputText value="#{item.companyName}" /></h3>
+                                        </f:facet>
+                                    </b:thumbnail>
+                                </p:link>
                             </p:dataGrid>
                         </b:panel>
 
@@ -95,10 +105,15 @@
                                         rows="4" paginator="true"
                                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
                                         style="margine-top:20px">
-                                <h:panelGroup style="border: 1px solid black">
-                                    <h:graphicImage value="resources/images/icon/beer.png" style="width: 100px;height: 100px"/>
-                                    <h:outputText value="#{item.companyName}"/>
-                                </h:panelGroup>
+                                <p:link outcome="storeDetail">
+                                    <f:param name="storeId" value="#{item.id}" />
+                                    <b:thumbnail styleClass="thumbNailCss">
+                                        <o:graphicImage value="#{item.picture}" dataURI="true" rendered="#{item.picture != null}" style="height: 150px;width: 150"/>
+                                        <f:facet name="caption">
+                                            <h3><h:outputText value="#{item.companyName}" /></h3>
+                                        </f:facet>
+                                    </b:thumbnail>
+                                </p:link>
                             </p:dataGrid>
                         </b:panel>
 
@@ -109,13 +124,18 @@
                                         rows="4" paginator="true"
                                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
                                         style="margine-top:20px">
-                                <h:panelGroup style="border: 1px solid black">
-                                    <h:graphicImage value="resources/images/icon/beer.png" style="width: 100px;height: 100px"/>
-                                    <h:outputText value="#{item.companyName}"/>
-                                </h:panelGroup>
+                                <p:link outcome="storeDetail">
+                                    <f:param name="storeId" value="#{item.id}" />
+                                    <b:thumbnail styleClass="thumbNailCss">
+                                        <o:graphicImage value="#{item.picture}" dataURI="true" rendered="#{item.picture != null}" style="height: 150px;width: 150"/>
+                                        <f:facet name="caption">
+                                            <h3><h:outputText value="#{item.companyName}" /></h3>
+                                        </f:facet>
+                                    </b:thumbnail>
+                                </p:link>
                             </p:dataGrid>
                         </b:panel>
-                        <hr></hr>
+
                         <b:panel id="stationaryPanel">
                             <h3 style="margin: 0 auto">STATIONARY</h3>
                             <h:outputText value="No store available" rendered="#{stores.stationaryList.size() ==0}"></h:outputText>
@@ -123,13 +143,18 @@
                                         rows="4" paginator="true"
                                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
                                         style="margine-top:20px">
-                                <h:panelGroup style="border: 1px solid black">
-                                    <h:graphicImage value="resources/images/icon/beer.png" style="width: 100px;height: 100px"/>
-                                    <h:outputText value="#{item.companyName}"/>
-                                </h:panelGroup>
+                                <p:link outcome="storeDetail">
+                                    <f:param name="storeId" value="#{item.id}" />
+                                    <b:thumbnail styleClass="thumbNailCss">
+                                        <o:graphicImage value="#{item.picture}" dataURI="true" rendered="#{item.picture != null}" style="height: 150px;width: 150"/>
+                                        <f:facet name="caption">
+                                            <h3><h:outputText value="#{item.companyName}" /></h3>
+                                        </f:facet>
+                                    </b:thumbnail>
+                                </p:link>
                             </p:dataGrid>
                         </b:panel>
-                        <hr></hr>
+
                         <b:panel id="gamePanel">
                             <h3 style="margin: 0 auto">GAME</h3>
                             <h:outputText value="No store available" rendered="#{stores.gameList.size() ==0}"></h:outputText>
@@ -137,13 +162,18 @@
                                         rows="4" paginator="true"
                                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
                                         style="margine-top:20px">
-                                <h:panelGroup style="border: 1px solid black">
-                                    <h:graphicImage value="resources/images/icon/beer.png" style="width: 100px;height: 100px"/>
-                                    <h:outputText value="#{item.companyName}"/>
-                                </h:panelGroup>
+                                <p:link outcome="storeDetail">
+                                    <f:param name="storeId" value="#{item.id}" />
+                                    <b:thumbnail styleClass="thumbNailCss">
+                                        <o:graphicImage value="#{item.picture}" dataURI="true" rendered="#{item.picture != null}" style="height: 150px;width: 150"/>
+                                        <f:facet name="caption">
+                                            <h3><h:outputText value="#{item.companyName}" /></h3>
+                                        </f:facet>
+                                    </b:thumbnail>
+                                </p:link>
                             </p:dataGrid>
                         </b:panel>
-                        <hr></hr>
+
                         <b:panel id="mediPanel">
                             <h3 style="margin: 0 auto">MEDICINE</h3>
                             <h:outputText value="No store available" rendered="#{stores.medicineList.size() ==0}"></h:outputText>
@@ -151,10 +181,15 @@
                                         rows="4" paginator="true"
                                         paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " paginatorPosition="bottom"
                                         style="margine-top:20px">
-                                <h:panelGroup style="border: 1px solid black">
-                                    <h:graphicImage value="resources/images/icon/beer.png" style="width: 100px;height: 100px"/>
-                                    <h:outputText value="#{item.companyName}"/>
-                                </h:panelGroup>
+                                <p:link outcome="storeDetail">
+                                    <f:param name="storeId" value="#{item.id}" />
+                                    <b:thumbnail styleClass="thumbNailCss">
+                                        <o:graphicImage value="#{item.picture}" dataURI="true" rendered="#{item.picture != null}" style="height: 150px;width: 150"/>
+                                        <f:facet name="caption">
+                                            <h3><h:outputText value="#{item.companyName}" /></h3>
+                                        </f:facet>
+                                    </b:thumbnail>
+                                </p:link>
                             </p:dataGrid>
                         </b:panel>
 
